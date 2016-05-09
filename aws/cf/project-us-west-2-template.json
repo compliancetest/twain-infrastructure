@@ -1,0 +1,39 @@
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+  "Resources" : 
+  { 
+	  "snsXtwainXalerts" : {
+		"Type": "AWS::SNS::Topic",
+		"Properties" : {
+			"DisplayName" : "twain-aler",
+			"TopicName" : "twain-alerts",
+			"Subscription" : [
+				{
+					"Endpoint" : "alerts@ct01.gosource.com.au", 
+					"Protocol" : "email"
+				}
+			]
+		}
+	  }
+
+					,"s3Xcaptures" : {
+					  "Type" : "AWS::S3::Bucket",
+					  "Properties" : {
+							"BucketName" : "captures.twain.gosource.com.au",
+						"Tags" : [ 
+						  { "Key" : "gs:project", "Value" : "twain" },
+						  { "Key" : "gs:category", "Value" : "alm" }
+						]
+					  }
+					}
+  },
+
+  "Outputs" : 
+  {
+  	"snsXtwainXalerts" : {
+  		"Value" : { "Ref" : "snsXtwainXalerts" }
+  	}
+  }
+}
+
+

@@ -1,0 +1,38 @@
+{
+    "Stacks": [
+        {
+            "StackId": "arn:aws:cloudformation:us-west-2:355178332009:stack/twain-integration-soln-db/1f053e60-cfd1-11e5-a59d-50d5ca789ee6", 
+            "Tags": [], 
+            "Outputs": [
+                {
+                    "OutputKey": "rdsXdbXmySQLXdns", 
+                    "OutputValue": "twain-integration-database-mysql.cxwpegmisug9.us-west-2.rds.amazonaws.com"
+                }, 
+                {
+                    "OutputKey": "rdsXdbXmySQLXport", 
+                    "OutputValue": "3306"
+                }, 
+                {
+                    "OutputKey": "rdsXdbXmySQLXdatabasename", 
+                    "OutputValue": "twain"
+                }, 
+                {
+                    "OutputKey": "rdsXdbXmySQLXusername", 
+                    "OutputValue": "root"
+                }, 
+                {
+                    "OutputKey": "rdsXdbXmySQLXpassword", 
+                    "OutputValue": "9UCXN8dJe8zwq6pBz4cj"
+                }
+            ], 
+            "CreationTime": "2016-02-10T08:34:38.037Z", 
+            "Capabilities": [
+                "CAPABILITY_IAM"
+            ], 
+            "StackName": "twain-integration-soln-db", 
+            "NotificationARNs": [], 
+            "StackStatus": "CREATE_COMPLETE", 
+            "DisableRollback": false
+        }
+    ]
+}

@@ -1,0 +1,149 @@
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+  "Resources" : 
+  {
+				
+				"securityGroupXdbXmySQL" : {
+				  "Type" : "AWS::EC2::SecurityGroup",
+				  "Properties" : {
+					"GroupDescription": "Security Group for database-mySQL",
+					"VpcId": "vpc-09031b6c",
+					"Tags" : [
+						{ "Key" : "gs:account", "Value" : "ct01" },
+						{ "Key" : "gs:project", "Value" : "twain" },
+						{ "Key" : "gs:container", "Value" : "int" },
+						{ "Key" : "gs:environment", "Value" : "int" },
+						{ "Key" : "gs:category", "Value" : "test" },
+						{ "Key" : "gs:tier", "Value" : "db" },
+						{ "Key" : "gs:component", "Value" : "mySQL" },
+						{ "Key" : "Name", "Value" : "twain-integration-database-mySQL" }
+					]
+				  }
+				},
+					"securityGroupIngressXdbXmySQL" : {
+					  "Type" : "AWS::EC2::SecurityGroupIngress",
+					  "Properties" : {
+						"GroupId": {"Ref" : "securityGroupXdbXmySQL"},
+						"IpProtocol": "tcp", 
+						"FromPort": "3306", 
+						"ToPort": "3306", 
+						"CidrIp": "0.0.0.0/0"
+					  }
+					},
+					"rdsSubnetGroupXdbXmySQL" : {
+						"Type" : "AWS::RDS::DBSubnetGroup",
+						"Properties" : {
+							"DBSubnetGroupDescription" : "twain-integration-database-mySQL",
+							"SubnetIds" : [ 
+									"subnet-afe8eed8",
+									"subnet-1be70a7f",
+									"subnet-e6d18dbf"
+							],
+							"Tags" : [
+								{ "Key" : "gs:account", "Value" : "ct01" },
+								{ "Key" : "gs:project", "Value" : "twain" },
+								{ "Key" : "gs:container", "Value" : "int" },
+								{ "Key" : "gs:environment", "Value" : "int" },
+								{ "Key" : "gs:category", "Value" : "test" },
+								{ "Key" : "gs:tier", "Value" : "db" },
+								{ "Key" : "gs:component", "Value" : "mySQL" },
+								{ "Key" : "Name", "Value" : "twain-integration-database-mySQL" } 
+							]
+						}
+					},
+					"rdsParameterGroupXdbXmySQL" : {
+						"Type" : "AWS::RDS::DBParameterGroup",
+						"Properties" : {
+							"Family" : "mysql5.6",
+							"Description" : "Parameter group for db-mySQL",
+							"Parameters" : {
+							},
+							"Tags" : [
+								{ "Key" : "gs:account", "Value" : "ct01" },
+								{ "Key" : "gs:project", "Value" : "twain" },
+								{ "Key" : "gs:container", "Value" : "int" },
+								{ "Key" : "gs:environment", "Value" : "int" },
+								{ "Key" : "gs:category", "Value" : "test" },
+								{ "Key" : "gs:tier", "Value" : "db" },
+								{ "Key" : "gs:component", "Value" : "mySQL" },
+								{ "Key" : "Name", "Value" : "twain-integration-database-mySQL" } 
+							]
+						}
+					},
+					"rdsOptionGroupXdbXmySQL" : {
+						"Type" : "AWS::RDS::OptionGroup",
+						"Properties" : {
+							"EngineName": "mysql",
+							"MajorEngineVersion": "5.6",
+							"OptionGroupDescription" : "Option group for db/mySQL",
+							"OptionConfigurations" : [
+							],
+							"Tags" : [
+								{ "Key" : "gs:account", "Value" : "ct01" },
+								{ "Key" : "gs:project", "Value" : "twain" },
+								{ "Key" : "gs:container", "Value" : "int" },
+								{ "Key" : "gs:environment", "Value" : "int" },
+								{ "Key" : "gs:category", "Value" : "test" },
+								{ "Key" : "gs:tier", "Value" : "db" },
+								{ "Key" : "gs:component", "Value" : "mySQL" },
+								{ "Key" : "Name", "Value" : "twain-integration-database-mySQL" } 
+							]
+						}
+					},
+					"rdsXdbXmySQL":{
+					  "Type":"AWS::RDS::DBInstance",
+					  "Properties":{
+						"Engine": "mysql",
+						"EngineVersion": "5.6",
+						"DBInstanceClass" : "db.t2.small",
+						"AllocatedStorage": "100",
+						"Port" : "3306",
+						"MasterUsername": "root",
+						"MasterUserPassword": "9UCXN8dJe8zwq6pBz4cj",
+						"BackupRetentionPeriod" : "35",
+						"DBInstanceIdentifier": "twain-integration-database-mySQL",
+						"DBName": "twain",
+						"DBSubnetGroupName": { "Ref" : "rdsSubnetGroupXdbXmySQL" },
+						"DBParameterGroupName": { "Ref" : "rdsParameterGroupXdbXmySQL" },
+						"OptionGroupName": { "Ref" : "rdsOptionGroupXdbXmySQL" },
+							"AvailabilityZone" : "us-west-2a",
+						"VPCSecurityGroups":[
+							{ "Ref" : "securityGroupXdbXmySQL" }
+						],
+						"Tags" : [
+							{ "Key" : "gs:account", "Value" : "ct01" },
+							{ "Key" : "gs:project", "Value" : "twain" },
+							{ "Key" : "gs:container", "Value" : "int" },
+							{ "Key" : "gs:environment", "Value" : "int" },
+							{ "Key" : "gs:category", "Value" : "test" },
+							{ "Key" : "gs:tier", "Value" : "db" },
+							{ "Key" : "gs:component", "Value" : "mySQL" },
+							{ "Key" : "Name", "Value" : "twain-integration-database-mySQL" } 
+						]
+					  }
+					}
+  },
+
+  "Outputs" : 
+  {
+					
+					"rdsXdbXmySQLXdns" : {
+						"Value" : { "Fn::GetAtt" : ["rdsXdbXmySQL", "Endpoint.Address"] }
+					},
+					"rdsXdbXmySQLXport" : {
+						"Value" : { "Fn::GetAtt" : ["rdsXdbXmySQL", "Endpoint.Port"] }
+					},
+					"rdsXdbXmySQLXdatabasename" : {
+						"Value" : "twain"
+					},
+					"rdsXdbXmySQLXusername" : {
+						"Value" : "root"
+					},
+					"rdsXdbXmySQLXpassword" : {
+						"Value" : "9UCXN8dJe8zwq6pBz4cj"
+					}
+
+  }
+}
+
+

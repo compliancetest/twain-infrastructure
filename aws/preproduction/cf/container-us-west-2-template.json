@@ -1,0 +1,1040 @@
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+  "Resources" : 
+  {
+    "vpc" : {
+      "Type" : "AWS::EC2::VPC",
+      "Properties" : {
+        "CidrBlock" : "10.0.0.0/16",
+        "EnableDnsSupport" : true,
+        "EnableDnsHostnames" : false,
+		"Tags" : [ 
+ 		  { "Key" : "gs:account", "Value" : "ct01" },
+		  { "Key" : "gs:project", "Value" : "twain" },
+		  { "Key" : "gs:container", "Value" : "preprod" },
+		  { "Key" : "gs:environment", "Value" : "preprod" },
+		  { "Key" : "gs:category", "Value" : "stg" },
+		  { "Key" : "Name", "Value" : "twain-preproduction" } 
+		]
+      }
+    }
+      ,"igw" : {
+        "Type" : "AWS::EC2::InternetGateway",
+        "Properties" : {
+	      "Tags" : [ 
+ 		    { "Key" : "gs:account", "Value" : "ct01" },
+		    { "Key" : "gs:project", "Value" : "twain" },
+		    { "Key" : "gs:container", "Value" : "preprod" },
+		    { "Key" : "gs:environment", "Value" : "preprod" },
+		    { "Key" : "gs:category", "Value" : "stg" },
+		    { "Key" : "Name", "Value" : "twain-preproduction" } 
+	      ]
+        }
+      },
+      "igwXattachment" : {
+        "Type" : "AWS::EC2::VPCGatewayAttachment",
+        "Properties" : {
+          "InternetGatewayId" : { "Ref" : "igw" },
+          "VpcId" : { "Ref" : "vpc" }
+        }
+      }
+				,"routeTableXexternal" :
+				{
+					"Type" : "AWS::EC2::RouteTable",
+					"Properties" : 
+					{
+						"VpcId" : { "Ref" : "vpc" },
+						"Tags" : [ 
+						  { "Key" : "gs:account", "Value" : "ct01" },
+						  { "Key" : "gs:project", "Value" : "twain" },
+						  { "Key" : "gs:container", "Value" : "preprod" },
+						  { "Key" : "gs:environment", "Value" : "preprod" },
+						  { "Key" : "gs:category", "Value" : "stg" },
+						  { "Key" : "Name", "Value" : "twain-preproduction-external" } 
+						]
+					}
+				}
+					,"routeXexternalXgateway" : {
+						"Type" : "AWS::EC2::Route",
+						"Properties" : {
+							"RouteTableId" : { "Ref" : "routeTableXexternal" },
+									"DestinationCidrBlock" : "0.0.0.0/0",
+									"GatewayId" : { "Ref" : "igw" }						
+							}
+					}
+				,"routeTableXinternal" :
+				{
+					"Type" : "AWS::EC2::RouteTable",
+					"Properties" : 
+					{
+						"VpcId" : { "Ref" : "vpc" },
+						"Tags" : [ 
+						  { "Key" : "gs:account", "Value" : "ct01" },
+						  { "Key" : "gs:project", "Value" : "twain" },
+						  { "Key" : "gs:container", "Value" : "preprod" },
+						  { "Key" : "gs:environment", "Value" : "preprod" },
+						  { "Key" : "gs:category", "Value" : "stg" },
+						  { "Key" : "Name", "Value" : "twain-preproduction-internal" } 
+						]
+					}
+				}
+	  		,"networkACLXopen" : 
+	  		{
+				"Type" : "AWS::EC2::NetworkAcl",
+				"Properties" : 
+				{
+					"VpcId" : { "Ref" : "vpc" },
+	                "Tags" : [ 
+	                  { "Key" : "gs:account", "Value" : "ct01" },
+		              { "Key" : "gs:project", "Value" : "twain" },
+		              { "Key" : "gs:container", "Value" : "preprod" },
+		              { "Key" : "gs:environment", "Value" : "preprod" },
+		              { "Key" : "gs:category", "Value" : "stg" },
+		              { "Key" : "Name", "Value" : "twain-preproduction-open" } 
+	                ]
+				}
+	  		}
+
+	  				,"ruleXopenXinXall" : 
+	  				{
+						"Type" : "AWS::EC2::NetworkAclEntry",
+						"Properties" : 
+						{
+							"NetworkAclId" : { "Ref" : "networkACLXopen" },
+							"Egress" : "false",
+							"RuleNumber" : "100",
+							"RuleAction" : "allow",
+							"CidrBlock" : "0.0.0.0/0",
+									"Protocol" : "-1",
+									"PortRange" : { "From" : "0", "To" : "65535"}
+						}
+					}
+	  				,"ruleXopenXoutXall" : 
+	  				{
+						"Type" : "AWS::EC2::NetworkAclEntry",
+						"Properties" : 
+						{
+							"NetworkAclId" : { "Ref" : "networkACLXopen" },
+							"Egress" : "true",
+							"RuleNumber" : "100",
+							"RuleAction" : "allow",
+							"CidrBlock" : "0.0.0.0/0",
+									"Protocol" : "-1",
+									"PortRange" : { "From" : "0", "To" : "65535"}
+						}
+					}
+			,"subnetXelbXa" : 
+			{
+			  "Type" : "AWS::EC2::Subnet",
+			  "Properties" : 
+			  {
+				"VpcId" : { "Ref" : "vpc" },
+				"AvailabilityZone" : "us-west-2a",
+				"CidrBlock" : "10.0.128.0/22",
+				"Tags" : [
+				  { "Key" : "gs:account", "Value" : "ct01" },
+				  { "Key" : "gs:project", "Value" : "twain" },
+				  { "Key" : "gs:container", "Value" : "preprod" },
+				  { "Key" : "gs:environment", "Value" : "preprod" },
+		          { "Key" : "gs:category", "Value" : "stg" },
+				  { "Key" : "gs:tier", "Value" : "elb" },
+				  { "Key" : "gs:zone", "Value" : "a" },
+				  { "Key" : "Name", "Value" : "twain-preproduction-elb-a" } 
+				]
+			  }
+			},
+
+			"routeTableXassociationXelbXa" : 
+			{
+			  "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+			  "Properties" : 
+			  {
+			  	"SubnetId" : { "Ref" : "subnetXelbXa" },
+			  	"RouteTableId" : { "Ref" : "routeTableXexternal" }
+			  }
+			},
+
+			"networkACLXassociationXelbXa" : 
+			{
+			  "Type" : "AWS::EC2::SubnetNetworkAclAssociation",
+			  "Properties" : 
+			  {
+			  	"SubnetId" : { "Ref" : "subnetXelbXa" },
+			  	"NetworkAclId" : { "Ref" : "networkACLXopen" }
+			  }
+			}
+			,"subnetXelbXb" : 
+			{
+			  "Type" : "AWS::EC2::Subnet",
+			  "Properties" : 
+			  {
+				"VpcId" : { "Ref" : "vpc" },
+				"AvailabilityZone" : "us-west-2b",
+				"CidrBlock" : "10.0.132.0/22",
+				"Tags" : [
+				  { "Key" : "gs:account", "Value" : "ct01" },
+				  { "Key" : "gs:project", "Value" : "twain" },
+				  { "Key" : "gs:container", "Value" : "preprod" },
+				  { "Key" : "gs:environment", "Value" : "preprod" },
+		          { "Key" : "gs:category", "Value" : "stg" },
+				  { "Key" : "gs:tier", "Value" : "elb" },
+				  { "Key" : "gs:zone", "Value" : "b" },
+				  { "Key" : "Name", "Value" : "twain-preproduction-elb-b" } 
+				]
+			  }
+			},
+
+			"routeTableXassociationXelbXb" : 
+			{
+			  "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+			  "Properties" : 
+			  {
+			  	"SubnetId" : { "Ref" : "subnetXelbXb" },
+			  	"RouteTableId" : { "Ref" : "routeTableXexternal" }
+			  }
+			},
+
+			"networkACLXassociationXelbXb" : 
+			{
+			  "Type" : "AWS::EC2::SubnetNetworkAclAssociation",
+			  "Properties" : 
+			  {
+			  	"SubnetId" : { "Ref" : "subnetXelbXb" },
+			  	"NetworkAclId" : { "Ref" : "networkACLXopen" }
+			  }
+			}
+			,"subnetXelbXc" : 
+			{
+			  "Type" : "AWS::EC2::Subnet",
+			  "Properties" : 
+			  {
+				"VpcId" : { "Ref" : "vpc" },
+				"AvailabilityZone" : "us-west-2c",
+				"CidrBlock" : "10.0.136.0/22",
+				"Tags" : [
+				  { "Key" : "gs:account", "Value" : "ct01" },
+				  { "Key" : "gs:project", "Value" : "twain" },
+				  { "Key" : "gs:container", "Value" : "preprod" },
+				  { "Key" : "gs:environment", "Value" : "preprod" },
+		          { "Key" : "gs:category", "Value" : "stg" },
+				  { "Key" : "gs:tier", "Value" : "elb" },
+				  { "Key" : "gs:zone", "Value" : "c" },
+				  { "Key" : "Name", "Value" : "twain-preproduction-elb-c" } 
+				]
+			  }
+			},
+
+			"routeTableXassociationXelbXc" : 
+			{
+			  "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+			  "Properties" : 
+			  {
+			  	"SubnetId" : { "Ref" : "subnetXelbXc" },
+			  	"RouteTableId" : { "Ref" : "routeTableXexternal" }
+			  }
+			},
+
+			"networkACLXassociationXelbXc" : 
+			{
+			  "Type" : "AWS::EC2::SubnetNetworkAclAssociation",
+			  "Properties" : 
+			  {
+			  	"SubnetId" : { "Ref" : "subnetXelbXc" },
+			  	"NetworkAclId" : { "Ref" : "networkACLXopen" }
+			  }
+			}
+			,"subnetXwebXa" : 
+			{
+			  "Type" : "AWS::EC2::Subnet",
+			  "Properties" : 
+			  {
+				"VpcId" : { "Ref" : "vpc" },
+				"AvailabilityZone" : "us-west-2a",
+				"CidrBlock" : "10.0.0.0/22",
+				"Tags" : [
+				  { "Key" : "gs:account", "Value" : "ct01" },
+				  { "Key" : "gs:project", "Value" : "twain" },
+				  { "Key" : "gs:container", "Value" : "preprod" },
+				  { "Key" : "gs:environment", "Value" : "preprod" },
+		          { "Key" : "gs:category", "Value" : "stg" },
+				  { "Key" : "gs:tier", "Value" : "web" },
+				  { "Key" : "gs:zone", "Value" : "a" },
+				  	{ "Key" : "network", "Value" : "private" },
+				  { "Key" : "Name", "Value" : "twain-preproduction-web-a" } 
+				]
+			  }
+			},
+
+			"routeTableXassociationXwebXa" : 
+			{
+			  "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+			  "Properties" : 
+			  {
+			  	"SubnetId" : { "Ref" : "subnetXwebXa" },
+			  	"RouteTableId" : { "Ref" : "routeTableXinternal" }
+			  }
+			},
+
+			"networkACLXassociationXwebXa" : 
+			{
+			  "Type" : "AWS::EC2::SubnetNetworkAclAssociation",
+			  "Properties" : 
+			  {
+			  	"SubnetId" : { "Ref" : "subnetXwebXa" },
+			  	"NetworkAclId" : { "Ref" : "networkACLXopen" }
+			  }
+			}
+			,"subnetXwebXb" : 
+			{
+			  "Type" : "AWS::EC2::Subnet",
+			  "Properties" : 
+			  {
+				"VpcId" : { "Ref" : "vpc" },
+				"AvailabilityZone" : "us-west-2b",
+				"CidrBlock" : "10.0.4.0/22",
+				"Tags" : [
+				  { "Key" : "gs:account", "Value" : "ct01" },
+				  { "Key" : "gs:project", "Value" : "twain" },
+				  { "Key" : "gs:container", "Value" : "preprod" },
+				  { "Key" : "gs:environment", "Value" : "preprod" },
+		          { "Key" : "gs:category", "Value" : "stg" },
+				  { "Key" : "gs:tier", "Value" : "web" },
+				  { "Key" : "gs:zone", "Value" : "b" },
+				  	{ "Key" : "network", "Value" : "private" },
+				  { "Key" : "Name", "Value" : "twain-preproduction-web-b" } 
+				]
+			  }
+			},
+
+			"routeTableXassociationXwebXb" : 
+			{
+			  "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+			  "Properties" : 
+			  {
+			  	"SubnetId" : { "Ref" : "subnetXwebXb" },
+			  	"RouteTableId" : { "Ref" : "routeTableXinternal" }
+			  }
+			},
+
+			"networkACLXassociationXwebXb" : 
+			{
+			  "Type" : "AWS::EC2::SubnetNetworkAclAssociation",
+			  "Properties" : 
+			  {
+			  	"SubnetId" : { "Ref" : "subnetXwebXb" },
+			  	"NetworkAclId" : { "Ref" : "networkACLXopen" }
+			  }
+			}
+			,"subnetXwebXc" : 
+			{
+			  "Type" : "AWS::EC2::Subnet",
+			  "Properties" : 
+			  {
+				"VpcId" : { "Ref" : "vpc" },
+				"AvailabilityZone" : "us-west-2c",
+				"CidrBlock" : "10.0.8.0/22",
+				"Tags" : [
+				  { "Key" : "gs:account", "Value" : "ct01" },
+				  { "Key" : "gs:project", "Value" : "twain" },
+				  { "Key" : "gs:container", "Value" : "preprod" },
+				  { "Key" : "gs:environment", "Value" : "preprod" },
+		          { "Key" : "gs:category", "Value" : "stg" },
+				  { "Key" : "gs:tier", "Value" : "web" },
+				  { "Key" : "gs:zone", "Value" : "c" },
+				  	{ "Key" : "network", "Value" : "private" },
+				  { "Key" : "Name", "Value" : "twain-preproduction-web-c" } 
+				]
+			  }
+			},
+
+			"routeTableXassociationXwebXc" : 
+			{
+			  "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+			  "Properties" : 
+			  {
+			  	"SubnetId" : { "Ref" : "subnetXwebXc" },
+			  	"RouteTableId" : { "Ref" : "routeTableXinternal" }
+			  }
+			},
+
+			"networkACLXassociationXwebXc" : 
+			{
+			  "Type" : "AWS::EC2::SubnetNetworkAclAssociation",
+			  "Properties" : 
+			  {
+			  	"SubnetId" : { "Ref" : "subnetXwebXc" },
+			  	"NetworkAclId" : { "Ref" : "networkACLXopen" }
+			  }
+			}
+			,"subnetXappXa" : 
+			{
+			  "Type" : "AWS::EC2::Subnet",
+			  "Properties" : 
+			  {
+				"VpcId" : { "Ref" : "vpc" },
+				"AvailabilityZone" : "us-west-2a",
+				"CidrBlock" : "10.0.32.0/22",
+				"Tags" : [
+				  { "Key" : "gs:account", "Value" : "ct01" },
+				  { "Key" : "gs:project", "Value" : "twain" },
+				  { "Key" : "gs:container", "Value" : "preprod" },
+				  { "Key" : "gs:environment", "Value" : "preprod" },
+		          { "Key" : "gs:category", "Value" : "stg" },
+				  { "Key" : "gs:tier", "Value" : "app" },
+				  { "Key" : "gs:zone", "Value" : "a" },
+				  	{ "Key" : "network", "Value" : "private" },
+				  { "Key" : "Name", "Value" : "twain-preproduction-application-a" } 
+				]
+			  }
+			},
+
+			"routeTableXassociationXappXa" : 
+			{
+			  "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+			  "Properties" : 
+			  {
+			  	"SubnetId" : { "Ref" : "subnetXappXa" },
+			  	"RouteTableId" : { "Ref" : "routeTableXinternal" }
+			  }
+			},
+
+			"networkACLXassociationXappXa" : 
+			{
+			  "Type" : "AWS::EC2::SubnetNetworkAclAssociation",
+			  "Properties" : 
+			  {
+			  	"SubnetId" : { "Ref" : "subnetXappXa" },
+			  	"NetworkAclId" : { "Ref" : "networkACLXopen" }
+			  }
+			}
+			,"subnetXappXb" : 
+			{
+			  "Type" : "AWS::EC2::Subnet",
+			  "Properties" : 
+			  {
+				"VpcId" : { "Ref" : "vpc" },
+				"AvailabilityZone" : "us-west-2b",
+				"CidrBlock" : "10.0.36.0/22",
+				"Tags" : [
+				  { "Key" : "gs:account", "Value" : "ct01" },
+				  { "Key" : "gs:project", "Value" : "twain" },
+				  { "Key" : "gs:container", "Value" : "preprod" },
+				  { "Key" : "gs:environment", "Value" : "preprod" },
+		          { "Key" : "gs:category", "Value" : "stg" },
+				  { "Key" : "gs:tier", "Value" : "app" },
+				  { "Key" : "gs:zone", "Value" : "b" },
+				  	{ "Key" : "network", "Value" : "private" },
+				  { "Key" : "Name", "Value" : "twain-preproduction-application-b" } 
+				]
+			  }
+			},
+
+			"routeTableXassociationXappXb" : 
+			{
+			  "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+			  "Properties" : 
+			  {
+			  	"SubnetId" : { "Ref" : "subnetXappXb" },
+			  	"RouteTableId" : { "Ref" : "routeTableXinternal" }
+			  }
+			},
+
+			"networkACLXassociationXappXb" : 
+			{
+			  "Type" : "AWS::EC2::SubnetNetworkAclAssociation",
+			  "Properties" : 
+			  {
+			  	"SubnetId" : { "Ref" : "subnetXappXb" },
+			  	"NetworkAclId" : { "Ref" : "networkACLXopen" }
+			  }
+			}
+			,"subnetXappXc" : 
+			{
+			  "Type" : "AWS::EC2::Subnet",
+			  "Properties" : 
+			  {
+				"VpcId" : { "Ref" : "vpc" },
+				"AvailabilityZone" : "us-west-2c",
+				"CidrBlock" : "10.0.40.0/22",
+				"Tags" : [
+				  { "Key" : "gs:account", "Value" : "ct01" },
+				  { "Key" : "gs:project", "Value" : "twain" },
+				  { "Key" : "gs:container", "Value" : "preprod" },
+				  { "Key" : "gs:environment", "Value" : "preprod" },
+		          { "Key" : "gs:category", "Value" : "stg" },
+				  { "Key" : "gs:tier", "Value" : "app" },
+				  { "Key" : "gs:zone", "Value" : "c" },
+				  	{ "Key" : "network", "Value" : "private" },
+				  { "Key" : "Name", "Value" : "twain-preproduction-application-c" } 
+				]
+			  }
+			},
+
+			"routeTableXassociationXappXc" : 
+			{
+			  "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+			  "Properties" : 
+			  {
+			  	"SubnetId" : { "Ref" : "subnetXappXc" },
+			  	"RouteTableId" : { "Ref" : "routeTableXinternal" }
+			  }
+			},
+
+			"networkACLXassociationXappXc" : 
+			{
+			  "Type" : "AWS::EC2::SubnetNetworkAclAssociation",
+			  "Properties" : 
+			  {
+			  	"SubnetId" : { "Ref" : "subnetXappXc" },
+			  	"NetworkAclId" : { "Ref" : "networkACLXopen" }
+			  }
+			}
+			,"subnetXdbXa" : 
+			{
+			  "Type" : "AWS::EC2::Subnet",
+			  "Properties" : 
+			  {
+				"VpcId" : { "Ref" : "vpc" },
+				"AvailabilityZone" : "us-west-2a",
+				"CidrBlock" : "10.0.48.0/22",
+				"Tags" : [
+				  { "Key" : "gs:account", "Value" : "ct01" },
+				  { "Key" : "gs:project", "Value" : "twain" },
+				  { "Key" : "gs:container", "Value" : "preprod" },
+				  { "Key" : "gs:environment", "Value" : "preprod" },
+		          { "Key" : "gs:category", "Value" : "stg" },
+				  { "Key" : "gs:tier", "Value" : "db" },
+				  { "Key" : "gs:zone", "Value" : "a" },
+				  	{ "Key" : "network", "Value" : "private" },
+				  { "Key" : "Name", "Value" : "twain-preproduction-database-a" } 
+				]
+			  }
+			},
+
+			"routeTableXassociationXdbXa" : 
+			{
+			  "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+			  "Properties" : 
+			  {
+			  	"SubnetId" : { "Ref" : "subnetXdbXa" },
+			  	"RouteTableId" : { "Ref" : "routeTableXinternal" }
+			  }
+			},
+
+			"networkACLXassociationXdbXa" : 
+			{
+			  "Type" : "AWS::EC2::SubnetNetworkAclAssociation",
+			  "Properties" : 
+			  {
+			  	"SubnetId" : { "Ref" : "subnetXdbXa" },
+			  	"NetworkAclId" : { "Ref" : "networkACLXopen" }
+			  }
+			}
+			,"subnetXdbXb" : 
+			{
+			  "Type" : "AWS::EC2::Subnet",
+			  "Properties" : 
+			  {
+				"VpcId" : { "Ref" : "vpc" },
+				"AvailabilityZone" : "us-west-2b",
+				"CidrBlock" : "10.0.52.0/22",
+				"Tags" : [
+				  { "Key" : "gs:account", "Value" : "ct01" },
+				  { "Key" : "gs:project", "Value" : "twain" },
+				  { "Key" : "gs:container", "Value" : "preprod" },
+				  { "Key" : "gs:environment", "Value" : "preprod" },
+		          { "Key" : "gs:category", "Value" : "stg" },
+				  { "Key" : "gs:tier", "Value" : "db" },
+				  { "Key" : "gs:zone", "Value" : "b" },
+				  	{ "Key" : "network", "Value" : "private" },
+				  { "Key" : "Name", "Value" : "twain-preproduction-database-b" } 
+				]
+			  }
+			},
+
+			"routeTableXassociationXdbXb" : 
+			{
+			  "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+			  "Properties" : 
+			  {
+			  	"SubnetId" : { "Ref" : "subnetXdbXb" },
+			  	"RouteTableId" : { "Ref" : "routeTableXinternal" }
+			  }
+			},
+
+			"networkACLXassociationXdbXb" : 
+			{
+			  "Type" : "AWS::EC2::SubnetNetworkAclAssociation",
+			  "Properties" : 
+			  {
+			  	"SubnetId" : { "Ref" : "subnetXdbXb" },
+			  	"NetworkAclId" : { "Ref" : "networkACLXopen" }
+			  }
+			}
+			,"subnetXdbXc" : 
+			{
+			  "Type" : "AWS::EC2::Subnet",
+			  "Properties" : 
+			  {
+				"VpcId" : { "Ref" : "vpc" },
+				"AvailabilityZone" : "us-west-2c",
+				"CidrBlock" : "10.0.56.0/22",
+				"Tags" : [
+				  { "Key" : "gs:account", "Value" : "ct01" },
+				  { "Key" : "gs:project", "Value" : "twain" },
+				  { "Key" : "gs:container", "Value" : "preprod" },
+				  { "Key" : "gs:environment", "Value" : "preprod" },
+		          { "Key" : "gs:category", "Value" : "stg" },
+				  { "Key" : "gs:tier", "Value" : "db" },
+				  { "Key" : "gs:zone", "Value" : "c" },
+				  	{ "Key" : "network", "Value" : "private" },
+				  { "Key" : "Name", "Value" : "twain-preproduction-database-c" } 
+				]
+			  }
+			},
+
+			"routeTableXassociationXdbXc" : 
+			{
+			  "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+			  "Properties" : 
+			  {
+			  	"SubnetId" : { "Ref" : "subnetXdbXc" },
+			  	"RouteTableId" : { "Ref" : "routeTableXinternal" }
+			  }
+			},
+
+			"networkACLXassociationXdbXc" : 
+			{
+			  "Type" : "AWS::EC2::SubnetNetworkAclAssociation",
+			  "Properties" : 
+			  {
+			  	"SubnetId" : { "Ref" : "subnetXdbXc" },
+			  	"NetworkAclId" : { "Ref" : "networkACLXopen" }
+			  }
+			}
+			,"subnetXmgmtXa" : 
+			{
+			  "Type" : "AWS::EC2::Subnet",
+			  "Properties" : 
+			  {
+				"VpcId" : { "Ref" : "vpc" },
+				"AvailabilityZone" : "us-west-2a",
+				"CidrBlock" : "10.0.240.0/22",
+				"Tags" : [
+				  { "Key" : "gs:account", "Value" : "ct01" },
+				  { "Key" : "gs:project", "Value" : "twain" },
+				  { "Key" : "gs:container", "Value" : "preprod" },
+				  { "Key" : "gs:environment", "Value" : "preprod" },
+		          { "Key" : "gs:category", "Value" : "stg" },
+				  { "Key" : "gs:tier", "Value" : "mgmt" },
+				  { "Key" : "gs:zone", "Value" : "a" },
+				  { "Key" : "Name", "Value" : "twain-preproduction-management-a" } 
+				]
+			  }
+			},
+
+			"routeTableXassociationXmgmtXa" : 
+			{
+			  "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+			  "Properties" : 
+			  {
+			  	"SubnetId" : { "Ref" : "subnetXmgmtXa" },
+			  	"RouteTableId" : { "Ref" : "routeTableXexternal" }
+			  }
+			},
+
+			"networkACLXassociationXmgmtXa" : 
+			{
+			  "Type" : "AWS::EC2::SubnetNetworkAclAssociation",
+			  "Properties" : 
+			  {
+			  	"SubnetId" : { "Ref" : "subnetXmgmtXa" },
+			  	"NetworkAclId" : { "Ref" : "networkACLXopen" }
+			  }
+			}
+			,"subnetXmgmtXb" : 
+			{
+			  "Type" : "AWS::EC2::Subnet",
+			  "Properties" : 
+			  {
+				"VpcId" : { "Ref" : "vpc" },
+				"AvailabilityZone" : "us-west-2b",
+				"CidrBlock" : "10.0.244.0/22",
+				"Tags" : [
+				  { "Key" : "gs:account", "Value" : "ct01" },
+				  { "Key" : "gs:project", "Value" : "twain" },
+				  { "Key" : "gs:container", "Value" : "preprod" },
+				  { "Key" : "gs:environment", "Value" : "preprod" },
+		          { "Key" : "gs:category", "Value" : "stg" },
+				  { "Key" : "gs:tier", "Value" : "mgmt" },
+				  { "Key" : "gs:zone", "Value" : "b" },
+				  { "Key" : "Name", "Value" : "twain-preproduction-management-b" } 
+				]
+			  }
+			},
+
+			"routeTableXassociationXmgmtXb" : 
+			{
+			  "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+			  "Properties" : 
+			  {
+			  	"SubnetId" : { "Ref" : "subnetXmgmtXb" },
+			  	"RouteTableId" : { "Ref" : "routeTableXexternal" }
+			  }
+			},
+
+			"networkACLXassociationXmgmtXb" : 
+			{
+			  "Type" : "AWS::EC2::SubnetNetworkAclAssociation",
+			  "Properties" : 
+			  {
+			  	"SubnetId" : { "Ref" : "subnetXmgmtXb" },
+			  	"NetworkAclId" : { "Ref" : "networkACLXopen" }
+			  }
+			}
+			,"subnetXmgmtXc" : 
+			{
+			  "Type" : "AWS::EC2::Subnet",
+			  "Properties" : 
+			  {
+				"VpcId" : { "Ref" : "vpc" },
+				"AvailabilityZone" : "us-west-2c",
+				"CidrBlock" : "10.0.248.0/22",
+				"Tags" : [
+				  { "Key" : "gs:account", "Value" : "ct01" },
+				  { "Key" : "gs:project", "Value" : "twain" },
+				  { "Key" : "gs:container", "Value" : "preprod" },
+				  { "Key" : "gs:environment", "Value" : "preprod" },
+		          { "Key" : "gs:category", "Value" : "stg" },
+				  { "Key" : "gs:tier", "Value" : "mgmt" },
+				  { "Key" : "gs:zone", "Value" : "c" },
+				  { "Key" : "Name", "Value" : "twain-preproduction-management-c" } 
+				]
+			  }
+			},
+
+			"routeTableXassociationXmgmtXc" : 
+			{
+			  "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+			  "Properties" : 
+			  {
+			  	"SubnetId" : { "Ref" : "subnetXmgmtXc" },
+			  	"RouteTableId" : { "Ref" : "routeTableXexternal" }
+			  }
+			},
+
+			"networkACLXassociationXmgmtXc" : 
+			{
+			  "Type" : "AWS::EC2::SubnetNetworkAclAssociation",
+			  "Properties" : 
+			  {
+			  	"SubnetId" : { "Ref" : "subnetXmgmtXc" },
+			  	"NetworkAclId" : { "Ref" : "networkACLXopen" }
+			  }
+			}
+  
+    ,"roleXmgmtXnat": {
+      "Type" : "AWS::IAM::Role",
+      "Properties" : {
+        "AssumeRolePolicyDocument" : {
+          "Version": "2012-10-17",
+          "Statement": [ {
+            "Effect": "Allow",
+            "Principal": { "Service": [ "ec2.amazonaws.com" ] },
+            "Action": [ "sts:AssumeRole" ]
+          } ]
+        },
+        "Path": "/",
+        "Policies": [
+          {
+            "PolicyName": "mgmt-nat",
+            "PolicyDocument" : {
+              "Version": "2012-10-17",
+              "Statement": 
+              [
+                {
+                  "Effect" : "Allow",
+                  "Action" : [
+                    "ec2:DescribeInstances",
+                    "ec2:ModifyInstanceAttribute",
+                    "ec2:DescribeSubnets",
+                    "ec2:DescribeRouteTables",
+                    "ec2:CreateRoute",
+                    "ec2:ReplaceRoute"
+                  ],
+                  "Resource": "*"
+                },
+                {
+                	"Resource": [
+                		"arn:aws:s3:::code.ct01.gosource.com.au"
+                	],
+                	"Action": [
+                		"s3:ListBucket"
+                	],
+                	"Effect": "Allow"
+                },
+				{
+					"Resource": [
+						"arn:aws:s3:::code.ct01.gosource.com.au/*"
+					],
+					"Action": [
+						"s3:GetObject",
+						"s3:ListObjects"
+					],
+					"Effect": "Allow"
+				}
+			  ]
+            }
+          }
+        ]
+      }
+    },
+    "instanceProfileXmgmtXnat" : {
+      "Type" : "AWS::IAM::InstanceProfile",
+      "Properties" : {
+        "Path" : "/",
+        "Roles" : [ { "Ref" : "roleXmgmtXnat" } ]
+      }
+    },
+	"securityGroupXmgmtXnat" : {
+	  "Type" : "AWS::EC2::SecurityGroup",
+	  "Properties" : {
+		"GroupDescription": "Security Group for HA NAT instances",
+		"VpcId": { "Ref": "vpc" },
+		"Tags" : [
+ 		    { "Key" : "gs:account", "Value" : "ct01" },
+			{ "Key" : "gs:project", "Value" : "twain" },
+			{ "Key" : "gs:container", "Value" : "preprod" },
+			{ "Key" : "gs:environment", "Value" : "preprod" },
+			{ "Key" : "gs:category", "Value" : "stg" },
+			{ "Key" : "gs:tier", "Value" : "mgmt"},
+			{ "Key" : "gs:component", "Value" : "nat"},
+			{ "Key" : "Name", "Value" : "twain-preproduction-management-nat" }
+		],
+		"SecurityGroupIngress" : [
+				{ "IpProtocol": "tcp", "FromPort": "22", "ToPort": "22", "CidrIp": "0.0.0.0/0" },
+				{ "IpProtocol": "-1", "FromPort": "1", "ToPort": "65535", "CidrIp": "10.0.0.0/16" }
+		]
+	  }
+	},
+	"securityGroupXmgmtXallXnat" : {
+	  "Type" : "AWS::EC2::SecurityGroup",
+	  "Properties" : {
+		"GroupDescription": "Security Group for access from NAT",
+		"VpcId": { "Ref": "vpc" },
+		"Tags" : [
+ 		    { "Key" : "gs:account", "Value" : "ct01" },
+			{ "Key" : "gs:project", "Value" : "twain" },
+			{ "Key" : "gs:container", "Value" : "preprod" },
+			{ "Key" : "gs:environment", "Value" : "preprod" },
+			{ "Key" : "gs:category", "Value" : "stg" },
+			{ "Key" : "gs:tier", "Value" : "all"},
+			{ "Key" : "gs:component", "Value" : "nat"},
+			{ "Key" : "Name", "Value" : "twain-preproduction-all-nat" }
+		],
+		"SecurityGroupIngress" : [
+				{ "IpProtocol": "tcp", "FromPort": "22", "ToPort": "22", "SourceSecurityGroupId": { "Ref" : "securityGroupXmgmtXnat"} }
+		]
+	  }
+	}
+
+			,"asgXmgmtXnatXa": {
+			  "DependsOn" : [ "subnetXmgmtXa" ],
+			  "Type": "AWS::AutoScaling::AutoScalingGroup",
+			  "Metadata": {
+				"AWS::CloudFormation::Init": {
+				  "configSets" : {
+				    "nat" : ["dirs", "bootstrap", "nat"]
+				  },
+				  "dirs": {
+				  	"commands": {
+					  "01Directories" : {
+						"command" : "mkdir --parents --mode=0755 /etc/gosource && mkdir --parents --mode=0700 /opt/gosource/bootstrap && mkdir --parents --mode=0755 /var/log/gosource",
+						"ignoreErrors" : "false"
+					  }
+					}
+				  },
+				  "bootstrap": {		  
+				  	"packages" : {
+					  	"yum" : {
+					  		"aws-cli" : []
+					  	}
+				  	},  
+				  	"files" : {
+				  	  "/etc/gosource/facts.sh" : {
+				  	    "content" : { "Fn::Join" : ["", [
+				  	    		"#!/bin/bash\n",
+				  	    		"echo \"gs:account=ct01\"\n",
+				  	    		"echo \"gs:project=twain\"\n",
+				  	    		"echo \"gs:container=preprod\"\n",
+				  	    		"echo \"gs:environment=preprod\"\n",
+				  	    		"echo \"gs:tier=mgmt\"\n",
+				  	    		"echo \"gs:component=nat\"\n",
+				  	    		"echo \"gs:zone=a\"\n",
+				  	    		"echo \"gs:role=nat\"\n",
+				  	    		"echo \"gs:credentials=credentials.ct01.gosource.com.au\"\n",
+				  	    		"echo \"gs:code=code.ct01.gosource.com.au\"\n",
+				  	    		"echo \"gs:configuration=configuration.ct01.gosource.com.au\"\n",
+				  	    		"echo \"gs:logs=logs.ct01.gosource.com.au\"\n",
+				  	    		"echo \"gs:backup=backup.ct01.gosource.com.au\"\n",
+				  	    		"echo \"gs:region=ap-southeast-2\"\n"
+				  	    	]]
+				  	    },
+				  	    "mode" : "000755"
+				  	  },
+				  	  "/opt/gosource/bootstrap/fetch.sh" : {
+				  	    "content" : { "Fn::Join" : ["", [
+				  	    		"#!/bin/bash -ex\n",
+				  	    		"exec > >(tee /var/log/gosource/fetch.log|logger -t gosource-fetch -s 2>/dev/console) 2>&1\n",
+				  	    		"REGION=$(/etc/gosource/facts.sh | grep gs:region | cut -d '=' -f 2)\n",
+				  	    		"CODE=$(/etc/gosource/facts.sh | grep gs:code | cut -d '=' -f 2)\n",
+				  	    		"aws --region ${REGION} s3 sync s3://${CODE}/bootstrap/centos/ /opt/gosource/bootstrap && chmod 0500 /opt/gosource/bootstrap/*.sh\n"
+				  	    	]]
+				  	    },
+				  	    "mode" : "000755"
+				  	  }		  	  
+				  	},
+					"commands": {
+					  "01Fetch" : {
+						"command" : "/opt/gosource/bootstrap/fetch.sh",
+						"ignoreErrors" : "false"
+					  },
+					  "02Initialise" : {
+						"command" : "/opt/gosource/bootstrap/init.sh",
+						"ignoreErrors" : "false"
+					  }
+					}
+				  },
+				  "nat": {
+ 					"commands": {
+					  "01ExecuteRouteUpdateScript" : {
+						"command" : "/opt/gosource/bootstrap/nat.sh",
+						"ignoreErrors" : "false"
+					  }
+					}
+				  }
+				}
+			  },
+			  "Properties": {
+				"Cooldown" : "30",
+				"LaunchConfigurationName": {"Ref": "launchConfigXmgmtXnatXa"},
+				"MinSize": "1",
+				"MaxSize": "1",
+				"VPCZoneIdentifier": [ { "Ref" : "subnetXmgmtXa"} ],
+				"Tags" : [
+				    { "Key" : "gs:account", "Value" : "ct01", "PropagateAtLaunch" : "True" },
+					{ "Key" : "gs:project", "Value" : "twain", "PropagateAtLaunch" : "True" },
+					{ "Key" : "gs:container", "Value" : "preprod", "PropagateAtLaunch" : "True" },
+					{ "Key" : "gs:environment", "Value" : "preprod", "PropagateAtLaunch" : "True" },
+					{ "Key" : "gs:category", "Value" : "stg", "PropagateAtLaunch" : "True" },
+					{ "Key" : "gs:tier", "Value" : "mgmt", "PropagateAtLaunch" : "True" },
+					{ "Key" : "gs:component", "Value" : "nat", "PropagateAtLaunch" : "True"},
+					{ "Key" : "gs:zone", "Value" : "a", "PropagateAtLaunch" : "True" },
+					{ "Key" : "Name", "Value" : "twain-preproduction-management-nat-a", "PropagateAtLaunch" : "True" }
+				]
+			  }
+			},
+		
+			"launchConfigXmgmtXnatXa": {
+			  "Type": "AWS::AutoScaling::LaunchConfiguration",
+			  "Properties": {
+				"KeyName": "twain",
+				"ImageId": "ami-77a4b816",
+				"InstanceType": "t2.micro",
+				"SecurityGroups" : [ { "Ref": "securityGroupXmgmtXnat" } ],
+				"IamInstanceProfile" : { "Ref" : "instanceProfileXmgmtXnat" },
+				"AssociatePublicIpAddress": true,
+				"UserData": {
+				  "Fn::Base64": { "Fn::Join": [ "", [
+					"#!/bin/bash -ex\n",
+					"exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1\n",
+					"yum install -y aws-cfn-bootstrap\n",				  
+					"# Remainder of configuration via metadata\n",
+					"/opt/aws/bin/cfn-init -v",
+					"         --stack ", { "Ref" : "AWS::StackName" },
+					"         --resource asgXmgmtXnatXa",
+					"         --region us-west-2 --configsets nat\n"
+				  ] ] }
+				}
+			  }
+			}
+  },
+
+  "Outputs" : 
+  {
+    "vpc" : 
+    {
+      "Value" : { "Ref" : "vpc" }
+    },
+    "igw" : 
+    {
+      "Value" : { "Ref" : "igw" }
+    }
+    	,"securityGroupXmgmtXnat" : 
+    	{
+    		"Value" : { "Ref" : "securityGroupXmgmtXallXnat" }
+    	}
+			,"subnetXelbXa" : 
+			{
+			  "Value" : { "Ref" : "subnetXelbXa" }
+			}
+			,"subnetXelbXb" : 
+			{
+			  "Value" : { "Ref" : "subnetXelbXb" }
+			}
+			,"subnetXelbXc" : 
+			{
+			  "Value" : { "Ref" : "subnetXelbXc" }
+			}
+			,"subnetXwebXa" : 
+			{
+			  "Value" : { "Ref" : "subnetXwebXa" }
+			}
+			,"subnetXwebXb" : 
+			{
+			  "Value" : { "Ref" : "subnetXwebXb" }
+			}
+			,"subnetXwebXc" : 
+			{
+			  "Value" : { "Ref" : "subnetXwebXc" }
+			}
+			,"subnetXappXa" : 
+			{
+			  "Value" : { "Ref" : "subnetXappXa" }
+			}
+			,"subnetXappXb" : 
+			{
+			  "Value" : { "Ref" : "subnetXappXb" }
+			}
+			,"subnetXappXc" : 
+			{
+			  "Value" : { "Ref" : "subnetXappXc" }
+			}
+			,"subnetXdbXa" : 
+			{
+			  "Value" : { "Ref" : "subnetXdbXa" }
+			}
+			,"subnetXdbXb" : 
+			{
+			  "Value" : { "Ref" : "subnetXdbXb" }
+			}
+			,"subnetXdbXc" : 
+			{
+			  "Value" : { "Ref" : "subnetXdbXc" }
+			}
+			,"subnetXmgmtXa" : 
+			{
+			  "Value" : { "Ref" : "subnetXmgmtXa" }
+			}
+			,"subnetXmgmtXb" : 
+			{
+			  "Value" : { "Ref" : "subnetXmgmtXb" }
+			}
+			,"subnetXmgmtXc" : 
+			{
+			  "Value" : { "Ref" : "subnetXmgmtXc" }
+			}
+  }
+}
+
+

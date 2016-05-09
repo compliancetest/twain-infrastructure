@@ -1,0 +1,16 @@
+{
+    "Stacks": [
+        {
+            "StackId": "arn:aws:cloudformation:us-west-2:355178332009:stack/twain-integration-app-website/eda5ffb0-13bb-11e6-9758-50d5ca789e4a", 
+            "Tags": [], 
+            "CreationTime": "2016-05-06T18:54:14.837Z", 
+            "Capabilities": [
+                "CAPABILITY_IAM"
+            ], 
+            "StackName": "twain-integration-app-website", 
+            "NotificationARNs": [], 
+            "StackStatus": "CREATE_COMPLETE", 
+            "DisableRollback": false
+        }
+    ]
+}

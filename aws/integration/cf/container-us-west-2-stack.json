@@ -1,0 +1,90 @@
+{
+    "Stacks": [
+        {
+            "StackId": "arn:aws:cloudformation:us-west-2:355178332009:stack/twain-integration-container/6a687e70-cfc8-11e5-a439-50d5ca789eae", 
+            "Tags": [], 
+            "Outputs": [
+                {
+                    "OutputKey": "vpc", 
+                    "OutputValue": "vpc-09031b6c"
+                }, 
+                {
+                    "OutputKey": "igw", 
+                    "OutputValue": "igw-bebcf0db"
+                }, 
+                {
+                    "OutputKey": "securityGroupXmgmtXnat", 
+                    "OutputValue": "sg-d920f1be"
+                }, 
+                {
+                    "OutputKey": "subnetXelbXa", 
+                    "OutputValue": "subnet-a0e8eed7"
+                }, 
+                {
+                    "OutputKey": "subnetXelbXb", 
+                    "OutputValue": "subnet-1ae70a7e"
+                }, 
+                {
+                    "OutputKey": "subnetXelbXc", 
+                    "OutputValue": "subnet-9cd18dc5"
+                }, 
+                {
+                    "OutputKey": "subnetXwebXa", 
+                    "OutputValue": "subnet-a1e8eed6"
+                }, 
+                {
+                    "OutputKey": "subnetXwebXb", 
+                    "OutputValue": "subnet-18e70a7c"
+                }, 
+                {
+                    "OutputKey": "subnetXwebXc", 
+                    "OutputValue": "subnet-99d18dc0"
+                }, 
+                {
+                    "OutputKey": "subnetXappXa", 
+                    "OutputValue": "subnet-a2e8eed5"
+                }, 
+                {
+                    "OutputKey": "subnetXappXb", 
+                    "OutputValue": "subnet-1fe70a7b"
+                }, 
+                {
+                    "OutputKey": "subnetXappXc", 
+                    "OutputValue": "subnet-9bd18dc2"
+                }, 
+                {
+                    "OutputKey": "subnetXdbXa", 
+                    "OutputValue": "subnet-afe8eed8"
+                }, 
+                {
+                    "OutputKey": "subnetXdbXb", 
+                    "OutputValue": "subnet-1be70a7f"
+                }, 
+                {
+                    "OutputKey": "subnetXdbXc", 
+                    "OutputValue": "subnet-e6d18dbf"
+                }, 
+                {
+                    "OutputKey": "subnetXmgmtXa", 
+                    "OutputValue": "subnet-a3e8eed4"
+                }, 
+                {
+                    "OutputKey": "subnetXmgmtXb", 
+                    "OutputValue": "subnet-19e70a7d"
+                }, 
+                {
+                    "OutputKey": "subnetXmgmtXc", 
+                    "OutputValue": "subnet-9dd18dc4"
+                }
+            ], 
+            "CreationTime": "2016-02-10T07:32:19.122Z", 
+            "Capabilities": [
+                "CAPABILITY_IAM"
+            ], 
+            "StackName": "twain-integration-container", 
+            "NotificationARNs": [], 
+            "StackStatus": "CREATE_COMPLETE", 
+            "DisableRollback": false
+        }
+    ]
+}

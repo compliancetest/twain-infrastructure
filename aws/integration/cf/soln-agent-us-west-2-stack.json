@@ -1,0 +1,46 @@
+{
+    "Stacks": [
+        {
+            "StackId": "arn:aws:cloudformation:us-west-2:355178332009:stack/twain-integration-soln-agent/49c2c8e0-d088-11e5-b037-50d5ca789ee6", 
+            "Tags": [], 
+            "Outputs": [
+                {
+                    "OutputKey": "elbXelbXagent", 
+                    "OutputValue": "twain-int-elb-agent"
+                }, 
+                {
+                    "OutputKey": "elbXelbXagentXdns", 
+                    "OutputValue": "twain-int-elb-agent-116460424.us-west-2.elb.amazonaws.com"
+                }, 
+                {
+                    "OutputKey": "ecsXappXagent", 
+                    "OutputValue": "twain-integration-soln-agent-ecsXappXagent-1TMYO3IOPQF4E"
+                }, 
+                {
+                    "OutputKey": "roleXappXagent", 
+                    "OutputValue": "twain-integration-soln-agent-roleXappXagent-LXBW1YVBSE3S"
+                }, 
+                {
+                    "OutputKey": "roleXappXagentXarn", 
+                    "OutputValue": "arn:aws:iam::355178332009:role/twain-integration-soln-agent-roleXappXagent-LXBW1YVBSE3S"
+                }, 
+                {
+                    "OutputKey": "roleXappXagentXservice", 
+                    "OutputValue": "twain-integration-soln-agen-roleXappXagentXservice-TEX0SFICZL1N"
+                }, 
+                {
+                    "OutputKey": "roleXappXagentXserviceXarn", 
+                    "OutputValue": "arn:aws:iam::355178332009:role/twain-integration-soln-agen-roleXappXagentXservice-TEX0SFICZL1N"
+                }
+            ], 
+            "CreationTime": "2016-02-11T06:25:47.643Z", 
+            "Capabilities": [
+                "CAPABILITY_IAM"
+            ], 
+            "StackName": "twain-integration-soln-agent", 
+            "NotificationARNs": [], 
+            "StackStatus": "CREATE_COMPLETE", 
+            "DisableRollback": false
+        }
+    ]
+}

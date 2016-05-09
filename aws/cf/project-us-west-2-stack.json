@@ -1,0 +1,22 @@
+{
+    "Stacks": [
+        {
+            "StackId": "arn:aws:cloudformation:us-west-2:355178332009:stack/twain-project/a4bf8010-b91a-11e5-ab1b-50d5ca789e1e", 
+            "Tags": [], 
+            "Outputs": [
+                {
+                    "OutputKey": "snsXtwainXalerts", 
+                    "OutputValue": "arn:aws:sns:us-west-2:355178332009:twain-alerts"
+                }
+            ], 
+            "CreationTime": "2016-01-12T10:52:58.906Z", 
+            "Capabilities": [
+                "CAPABILITY_IAM"
+            ], 
+            "StackName": "twain-project", 
+            "NotificationARNs": [], 
+            "StackStatus": "CREATE_COMPLETE", 
+            "DisableRollback": false
+        }
+    ]
+}

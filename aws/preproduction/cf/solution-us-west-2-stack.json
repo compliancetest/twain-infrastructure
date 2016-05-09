@@ -1,0 +1,110 @@
+{
+    "Stacks": [
+        {
+            "StackId": "arn:aws:cloudformation:us-west-2:355178332009:stack/twain-preproduction-solution/665fd220-bab9-11e5-a63a-503f2a2ceeae", 
+            "Tags": [], 
+            "Outputs": [
+                {
+                    "OutputKey": "elbXelbXwww", 
+                    "OutputValue": "twain-preprod-elb-www"
+                }, 
+                {
+                    "OutputKey": "elbXelbXwwwXdns", 
+                    "OutputValue": "twain-preprod-elb-www-1058764002.us-west-2.elb.amazonaws.com"
+                }, 
+                {
+                    "OutputKey": "elbXelbXagent", 
+                    "OutputValue": "twain-preprod-elb-agent"
+                }, 
+                {
+                    "OutputKey": "elbXelbXagentXdns", 
+                    "OutputValue": "twain-preprod-elb-agent-1946204208.us-west-2.elb.amazonaws.com"
+                }, 
+                {
+                    "OutputKey": "elbXelbXsim", 
+                    "OutputValue": "twain-preprod-elb-sim"
+                }, 
+                {
+                    "OutputKey": "elbXelbXsimXdns", 
+                    "OutputValue": "twain-preprod-elb-sim-1706974032.us-west-2.elb.amazonaws.com"
+                }, 
+                {
+                    "OutputKey": "ecsXwebXwww", 
+                    "OutputValue": "twain-preproduction-solution-ecsXwebXwww-1A9QFCSKGFR79"
+                }, 
+                {
+                    "OutputKey": "roleXwebXwwwXservice", 
+                    "OutputValue": "twain-preproduction-solution-roleXwebXwwwXservice-I0ZOMOE8X6OA"
+                }, 
+                {
+                    "OutputKey": "roleXwebXwww", 
+                    "OutputValue": "twain-preproduction-solution-roleXwebXwwwXinstance-19GATG8LCGA65"
+                }, 
+                {
+                    "OutputKey": "roleXwebXwwwXserviceXarn", 
+                    "OutputValue": "arn:aws:iam::355178332009:role/twain-preproduction-solution-roleXwebXwwwXservice-I0ZOMOE8X6OA"
+                }, 
+                {
+                    "OutputKey": "ecsXappXagent", 
+                    "OutputValue": "twain-preproduction-solution-ecsXappXagent-1GCZMR513SY6O"
+                }, 
+                {
+                    "OutputKey": "roleXappXagentXservice", 
+                    "OutputValue": "twain-preproduction-solutio-roleXappXagentXservice-1XKD7T8ZDIMXV"
+                }, 
+                {
+                    "OutputKey": "roleXappXagent", 
+                    "OutputValue": "twain-preproduction-soluti-roleXappXagentXinstance-586EZZXHXMAY"
+                }, 
+                {
+                    "OutputKey": "roleXappXagentXserviceXarn", 
+                    "OutputValue": "arn:aws:iam::355178332009:role/twain-preproduction-solutio-roleXappXagentXservice-1XKD7T8ZDIMXV"
+                }, 
+                {
+                    "OutputKey": "ecsXappXsim", 
+                    "OutputValue": "twain-preproduction-solution-ecsXappXsim-1NJI67KA129O"
+                }, 
+                {
+                    "OutputKey": "roleXappXsimXservice", 
+                    "OutputValue": "twain-preproduction-solution-roleXappXsimXservice-514ODYECA5M9"
+                }, 
+                {
+                    "OutputKey": "roleXappXsim", 
+                    "OutputValue": "twain-preproduction-solution-roleXappXsimXinstance-FO0KR37MV74N"
+                }, 
+                {
+                    "OutputKey": "roleXappXsimXserviceXarn", 
+                    "OutputValue": "arn:aws:iam::355178332009:role/twain-preproduction-solution-roleXappXsimXservice-514ODYECA5M9"
+                }, 
+                {
+                    "OutputKey": "rdsXdbXmySQLXdns", 
+                    "OutputValue": "twain-preproduction-database-mysql.cxwpegmisug9.us-west-2.rds.amazonaws.com"
+                }, 
+                {
+                    "OutputKey": "rdsXdbXmySQLXport", 
+                    "OutputValue": "3306"
+                }, 
+                {
+                    "OutputKey": "rdsXdbXmySQLXdatabasename", 
+                    "OutputValue": "twain"
+                }, 
+                {
+                    "OutputKey": "rdsXdbXmySQLXusername", 
+                    "OutputValue": "root"
+                }, 
+                {
+                    "OutputKey": "rdsXdbXmySQLXpassword", 
+                    "OutputValue": "HHFRrYKvSCB5ZVdDTUvS"
+                }
+            ], 
+            "CreationTime": "2016-01-14T12:21:55.418Z", 
+            "Capabilities": [
+                "CAPABILITY_IAM"
+            ], 
+            "StackName": "twain-preproduction-solution", 
+            "NotificationARNs": [], 
+            "StackStatus": "CREATE_COMPLETE", 
+            "DisableRollback": false
+        }
+    ]
+}
