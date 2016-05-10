@@ -1,0 +1,915 @@
+
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+  "Resources" : 
+  {
+		"vpc" : {
+		  "Type" : "AWS::EC2::VPC",
+		  "Properties" : {
+			"CidrBlock" : "10.0.0.0/16",
+			"EnableDnsSupport" : true,
+			"EnableDnsHostnames" : false,
+			"Tags" : [ 
+			  { "Key" : "gs:account", "Value" : "ct01" },
+			  { "Key" : "gs:project", "Value" : "twain" },
+			  { "Key" : "gs:container", "Value" : "prod" },
+			  { "Key" : "gs:environment", "Value" : "prod" },
+			  { "Key" : "gs:category", "Value" : "prod" },
+			  { "Key" : "Name", "Value" : "twain-production" } 
+			]
+		  }
+		}
+		  ,"igw" : {
+			"Type" : "AWS::EC2::InternetGateway",
+			"Properties" : {
+			  "Tags" : [ 
+				{ "Key" : "gs:account", "Value" : "ct01" },
+				{ "Key" : "gs:project", "Value" : "twain" },
+				{ "Key" : "gs:container", "Value" : "prod" },
+				{ "Key" : "gs:environment", "Value" : "prod" },
+				{ "Key" : "gs:category", "Value" : "prod" },
+				{ "Key" : "Name", "Value" : "twain-production" } 
+			  ]
+			}
+		  },
+		  "igwXattachment" : {
+			"Type" : "AWS::EC2::VPCGatewayAttachment",
+			"Properties" : {
+			  "InternetGatewayId" : { "Ref" : "igw" },
+			  "VpcId" : { "Ref" : "vpc" }
+			}
+		  }
+                        ,"routeTableXexternalXa" :
+                        {
+                            "Type" : "AWS::EC2::RouteTable",
+                            "Properties" : 
+                            {
+                                "VpcId" : { "Ref" : "vpc" },
+                                "Tags" : [ 
+                                  { "Key" : "gs:account", "Value" : "ct01" },
+                                  { "Key" : "gs:project", "Value" : "twain" },
+                                  { "Key" : "gs:container", "Value" : "prod" },
+                                  { "Key" : "gs:environment", "Value" : "prod" },
+                                  { "Key" : "gs:category", "Value" : "prod" },
+                                    { "Key" : "gs:zone", "Value" : "a" },
+                                  { "Key" : "Name", "Value" : "twain-production-external-a" } 
+                                ]
+                            }
+                        }
+                            ,"routeXexternalXaXgateway" : {
+                                "Type" : "AWS::EC2::Route",
+                                "Properties" : {
+                                    "RouteTableId" : { "Ref" : "routeTableXexternalXa" },
+                                            "DestinationCidrBlock" : "0.0.0.0/0",
+                                            "GatewayId" : { "Ref" : "igw" }						
+                                    }
+                            }
+                        ,"routeTableXexternalXb" :
+                        {
+                            "Type" : "AWS::EC2::RouteTable",
+                            "Properties" : 
+                            {
+                                "VpcId" : { "Ref" : "vpc" },
+                                "Tags" : [ 
+                                  { "Key" : "gs:account", "Value" : "ct01" },
+                                  { "Key" : "gs:project", "Value" : "twain" },
+                                  { "Key" : "gs:container", "Value" : "prod" },
+                                  { "Key" : "gs:environment", "Value" : "prod" },
+                                  { "Key" : "gs:category", "Value" : "prod" },
+                                    { "Key" : "gs:zone", "Value" : "b" },
+                                  { "Key" : "Name", "Value" : "twain-production-external-b" } 
+                                ]
+                            }
+                        }
+                            ,"routeXexternalXbXgateway" : {
+                                "Type" : "AWS::EC2::Route",
+                                "Properties" : {
+                                    "RouteTableId" : { "Ref" : "routeTableXexternalXb" },
+                                            "DestinationCidrBlock" : "0.0.0.0/0",
+                                            "GatewayId" : { "Ref" : "igw" }						
+                                    }
+                            }
+                        ,"routeTableXinternalXa" :
+                        {
+                            "Type" : "AWS::EC2::RouteTable",
+                            "Properties" : 
+                            {
+                                "VpcId" : { "Ref" : "vpc" },
+                                "Tags" : [ 
+                                  { "Key" : "gs:account", "Value" : "ct01" },
+                                  { "Key" : "gs:project", "Value" : "twain" },
+                                  { "Key" : "gs:container", "Value" : "prod" },
+                                  { "Key" : "gs:environment", "Value" : "prod" },
+                                  { "Key" : "gs:category", "Value" : "prod" },
+                                    { "Key" : "gs:zone", "Value" : "a" },
+                                  { "Key" : "Name", "Value" : "twain-production-internal-a" } 
+                                ]
+                            }
+                        }
+                        ,"routeTableXinternalXb" :
+                        {
+                            "Type" : "AWS::EC2::RouteTable",
+                            "Properties" : 
+                            {
+                                "VpcId" : { "Ref" : "vpc" },
+                                "Tags" : [ 
+                                  { "Key" : "gs:account", "Value" : "ct01" },
+                                  { "Key" : "gs:project", "Value" : "twain" },
+                                  { "Key" : "gs:container", "Value" : "prod" },
+                                  { "Key" : "gs:environment", "Value" : "prod" },
+                                  { "Key" : "gs:category", "Value" : "prod" },
+                                    { "Key" : "gs:zone", "Value" : "b" },
+                                  { "Key" : "Name", "Value" : "twain-production-internal-b" } 
+                                ]
+                            }
+                        }
+				,"networkACLXopen" : 
+				{
+					"Type" : "AWS::EC2::NetworkAcl",
+					"Properties" : 
+					{
+						"VpcId" : { "Ref" : "vpc" },
+						"Tags" : [ 
+						  { "Key" : "gs:account", "Value" : "ct01" },
+						  { "Key" : "gs:project", "Value" : "twain" },
+						  { "Key" : "gs:container", "Value" : "prod" },
+						  { "Key" : "gs:environment", "Value" : "prod" },
+						  { "Key" : "gs:category", "Value" : "prod" },
+						  { "Key" : "Name", "Value" : "twain-production-open" } 
+						]
+					}
+				}
+	
+						,"ruleXopenXinXall" : 
+						{
+							"Type" : "AWS::EC2::NetworkAclEntry",
+							"Properties" : 
+							{
+								"NetworkAclId" : { "Ref" : "networkACLXopen" },
+								"Egress" : "false",
+								"RuleNumber" : "100",
+								"RuleAction" : "allow",
+								"CidrBlock" : "0.0.0.0/0",
+										"Protocol" : "-1",
+										"PortRange" : { "From" : "0", "To" : "65535"}
+							}
+						}
+						,"ruleXopenXoutXall" : 
+						{
+							"Type" : "AWS::EC2::NetworkAclEntry",
+							"Properties" : 
+							{
+								"NetworkAclId" : { "Ref" : "networkACLXopen" },
+								"Egress" : "true",
+								"RuleNumber" : "100",
+								"RuleAction" : "allow",
+								"CidrBlock" : "0.0.0.0/0",
+										"Protocol" : "-1",
+										"PortRange" : { "From" : "0", "To" : "65535"}
+							}
+						}
+                    ,"subnetXelbXa" : 
+                    {
+                      "Type" : "AWS::EC2::Subnet",
+                      "Properties" : 
+                      {
+                        "VpcId" : { "Ref" : "vpc" },
+                        "AvailabilityZone" : "us-west-2a",
+                        "CidrBlock" : "10.0.128.0/22",
+                        "Tags" : [
+                          { "Key" : "gs:account", "Value" : "ct01" },
+                          { "Key" : "gs:project", "Value" : "twain" },
+                          { "Key" : "gs:container", "Value" : "prod" },
+                          { "Key" : "gs:environment", "Value" : "prod" },
+                          { "Key" : "gs:category", "Value" : "prod" },
+                          { "Key" : "gs:tier", "Value" : "elb" },
+                          { "Key" : "gs:zone", "Value" : "a" },
+                          { "Key" : "Name", "Value" : "twain-production-elb-a" } 
+                        ]
+                      }
+                    },
+        
+                    "routeTableXassociationXelbXa" : 
+                    {
+                      "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+                      "Properties" : 
+                      {
+                        "SubnetId" : { "Ref" : "subnetXelbXa" },
+                        "RouteTableId" : { "Ref" : "routeTableXexternalXa" }
+                      }
+                    },
+        
+                    "networkACLXassociationXelbXa" : 
+                    {
+                      "Type" : "AWS::EC2::SubnetNetworkAclAssociation",
+                      "Properties" : 
+                      {
+                        "SubnetId" : { "Ref" : "subnetXelbXa" },
+                        "NetworkAclId" : { "Ref" : "networkACLXopen" }
+                      }
+                    }
+                    ,"subnetXelbXb" : 
+                    {
+                      "Type" : "AWS::EC2::Subnet",
+                      "Properties" : 
+                      {
+                        "VpcId" : { "Ref" : "vpc" },
+                        "AvailabilityZone" : "us-west-2b",
+                        "CidrBlock" : "10.0.132.0/22",
+                        "Tags" : [
+                          { "Key" : "gs:account", "Value" : "ct01" },
+                          { "Key" : "gs:project", "Value" : "twain" },
+                          { "Key" : "gs:container", "Value" : "prod" },
+                          { "Key" : "gs:environment", "Value" : "prod" },
+                          { "Key" : "gs:category", "Value" : "prod" },
+                          { "Key" : "gs:tier", "Value" : "elb" },
+                          { "Key" : "gs:zone", "Value" : "b" },
+                          { "Key" : "Name", "Value" : "twain-production-elb-b" } 
+                        ]
+                      }
+                    },
+        
+                    "routeTableXassociationXelbXb" : 
+                    {
+                      "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+                      "Properties" : 
+                      {
+                        "SubnetId" : { "Ref" : "subnetXelbXb" },
+                        "RouteTableId" : { "Ref" : "routeTableXexternalXb" }
+                      }
+                    },
+        
+                    "networkACLXassociationXelbXb" : 
+                    {
+                      "Type" : "AWS::EC2::SubnetNetworkAclAssociation",
+                      "Properties" : 
+                      {
+                        "SubnetId" : { "Ref" : "subnetXelbXb" },
+                        "NetworkAclId" : { "Ref" : "networkACLXopen" }
+                      }
+                    }
+                    ,"subnetXwebXa" : 
+                    {
+                      "Type" : "AWS::EC2::Subnet",
+                      "Properties" : 
+                      {
+                        "VpcId" : { "Ref" : "vpc" },
+                        "AvailabilityZone" : "us-west-2a",
+                        "CidrBlock" : "10.0.0.0/22",
+                        "Tags" : [
+                          { "Key" : "gs:account", "Value" : "ct01" },
+                          { "Key" : "gs:project", "Value" : "twain" },
+                          { "Key" : "gs:container", "Value" : "prod" },
+                          { "Key" : "gs:environment", "Value" : "prod" },
+                          { "Key" : "gs:category", "Value" : "prod" },
+                          { "Key" : "gs:tier", "Value" : "web" },
+                          { "Key" : "gs:zone", "Value" : "a" },
+                            { "Key" : "network", "Value" : "private" },
+                          { "Key" : "Name", "Value" : "twain-production-web-a" } 
+                        ]
+                      }
+                    },
+        
+                    "routeTableXassociationXwebXa" : 
+                    {
+                      "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+                      "Properties" : 
+                      {
+                        "SubnetId" : { "Ref" : "subnetXwebXa" },
+                        "RouteTableId" : { "Ref" : "routeTableXinternalXa" }
+                      }
+                    },
+        
+                    "networkACLXassociationXwebXa" : 
+                    {
+                      "Type" : "AWS::EC2::SubnetNetworkAclAssociation",
+                      "Properties" : 
+                      {
+                        "SubnetId" : { "Ref" : "subnetXwebXa" },
+                        "NetworkAclId" : { "Ref" : "networkACLXopen" }
+                      }
+                    }
+                    ,"subnetXwebXb" : 
+                    {
+                      "Type" : "AWS::EC2::Subnet",
+                      "Properties" : 
+                      {
+                        "VpcId" : { "Ref" : "vpc" },
+                        "AvailabilityZone" : "us-west-2b",
+                        "CidrBlock" : "10.0.4.0/22",
+                        "Tags" : [
+                          { "Key" : "gs:account", "Value" : "ct01" },
+                          { "Key" : "gs:project", "Value" : "twain" },
+                          { "Key" : "gs:container", "Value" : "prod" },
+                          { "Key" : "gs:environment", "Value" : "prod" },
+                          { "Key" : "gs:category", "Value" : "prod" },
+                          { "Key" : "gs:tier", "Value" : "web" },
+                          { "Key" : "gs:zone", "Value" : "b" },
+                            { "Key" : "network", "Value" : "private" },
+                          { "Key" : "Name", "Value" : "twain-production-web-b" } 
+                        ]
+                      }
+                    },
+        
+                    "routeTableXassociationXwebXb" : 
+                    {
+                      "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+                      "Properties" : 
+                      {
+                        "SubnetId" : { "Ref" : "subnetXwebXb" },
+                        "RouteTableId" : { "Ref" : "routeTableXinternalXb" }
+                      }
+                    },
+        
+                    "networkACLXassociationXwebXb" : 
+                    {
+                      "Type" : "AWS::EC2::SubnetNetworkAclAssociation",
+                      "Properties" : 
+                      {
+                        "SubnetId" : { "Ref" : "subnetXwebXb" },
+                        "NetworkAclId" : { "Ref" : "networkACLXopen" }
+                      }
+                    }
+                    ,"subnetXdbXa" : 
+                    {
+                      "Type" : "AWS::EC2::Subnet",
+                      "Properties" : 
+                      {
+                        "VpcId" : { "Ref" : "vpc" },
+                        "AvailabilityZone" : "us-west-2a",
+                        "CidrBlock" : "10.0.48.0/22",
+                        "Tags" : [
+                          { "Key" : "gs:account", "Value" : "ct01" },
+                          { "Key" : "gs:project", "Value" : "twain" },
+                          { "Key" : "gs:container", "Value" : "prod" },
+                          { "Key" : "gs:environment", "Value" : "prod" },
+                          { "Key" : "gs:category", "Value" : "prod" },
+                          { "Key" : "gs:tier", "Value" : "db" },
+                          { "Key" : "gs:zone", "Value" : "a" },
+                            { "Key" : "network", "Value" : "private" },
+                          { "Key" : "Name", "Value" : "twain-production-database-a" } 
+                        ]
+                      }
+                    },
+        
+                    "routeTableXassociationXdbXa" : 
+                    {
+                      "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+                      "Properties" : 
+                      {
+                        "SubnetId" : { "Ref" : "subnetXdbXa" },
+                        "RouteTableId" : { "Ref" : "routeTableXinternalXa" }
+                      }
+                    },
+        
+                    "networkACLXassociationXdbXa" : 
+                    {
+                      "Type" : "AWS::EC2::SubnetNetworkAclAssociation",
+                      "Properties" : 
+                      {
+                        "SubnetId" : { "Ref" : "subnetXdbXa" },
+                        "NetworkAclId" : { "Ref" : "networkACLXopen" }
+                      }
+                    }
+                    ,"subnetXdbXb" : 
+                    {
+                      "Type" : "AWS::EC2::Subnet",
+                      "Properties" : 
+                      {
+                        "VpcId" : { "Ref" : "vpc" },
+                        "AvailabilityZone" : "us-west-2b",
+                        "CidrBlock" : "10.0.52.0/22",
+                        "Tags" : [
+                          { "Key" : "gs:account", "Value" : "ct01" },
+                          { "Key" : "gs:project", "Value" : "twain" },
+                          { "Key" : "gs:container", "Value" : "prod" },
+                          { "Key" : "gs:environment", "Value" : "prod" },
+                          { "Key" : "gs:category", "Value" : "prod" },
+                          { "Key" : "gs:tier", "Value" : "db" },
+                          { "Key" : "gs:zone", "Value" : "b" },
+                            { "Key" : "network", "Value" : "private" },
+                          { "Key" : "Name", "Value" : "twain-production-database-b" } 
+                        ]
+                      }
+                    },
+        
+                    "routeTableXassociationXdbXb" : 
+                    {
+                      "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+                      "Properties" : 
+                      {
+                        "SubnetId" : { "Ref" : "subnetXdbXb" },
+                        "RouteTableId" : { "Ref" : "routeTableXinternalXb" }
+                      }
+                    },
+        
+                    "networkACLXassociationXdbXb" : 
+                    {
+                      "Type" : "AWS::EC2::SubnetNetworkAclAssociation",
+                      "Properties" : 
+                      {
+                        "SubnetId" : { "Ref" : "subnetXdbXb" },
+                        "NetworkAclId" : { "Ref" : "networkACLXopen" }
+                      }
+                    }
+                    ,"subnetXmgmtXa" : 
+                    {
+                      "Type" : "AWS::EC2::Subnet",
+                      "Properties" : 
+                      {
+                        "VpcId" : { "Ref" : "vpc" },
+                        "AvailabilityZone" : "us-west-2a",
+                        "CidrBlock" : "10.0.240.0/22",
+                        "Tags" : [
+                          { "Key" : "gs:account", "Value" : "ct01" },
+                          { "Key" : "gs:project", "Value" : "twain" },
+                          { "Key" : "gs:container", "Value" : "prod" },
+                          { "Key" : "gs:environment", "Value" : "prod" },
+                          { "Key" : "gs:category", "Value" : "prod" },
+                          { "Key" : "gs:tier", "Value" : "mgmt" },
+                          { "Key" : "gs:zone", "Value" : "a" },
+                          { "Key" : "Name", "Value" : "twain-production-management-a" } 
+                        ]
+                      }
+                    },
+        
+                    "routeTableXassociationXmgmtXa" : 
+                    {
+                      "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+                      "Properties" : 
+                      {
+                        "SubnetId" : { "Ref" : "subnetXmgmtXa" },
+                        "RouteTableId" : { "Ref" : "routeTableXexternalXa" }
+                      }
+                    },
+        
+                    "networkACLXassociationXmgmtXa" : 
+                    {
+                      "Type" : "AWS::EC2::SubnetNetworkAclAssociation",
+                      "Properties" : 
+                      {
+                        "SubnetId" : { "Ref" : "subnetXmgmtXa" },
+                        "NetworkAclId" : { "Ref" : "networkACLXopen" }
+                      }
+                    }
+                    ,"subnetXmgmtXb" : 
+                    {
+                      "Type" : "AWS::EC2::Subnet",
+                      "Properties" : 
+                      {
+                        "VpcId" : { "Ref" : "vpc" },
+                        "AvailabilityZone" : "us-west-2b",
+                        "CidrBlock" : "10.0.244.0/22",
+                        "Tags" : [
+                          { "Key" : "gs:account", "Value" : "ct01" },
+                          { "Key" : "gs:project", "Value" : "twain" },
+                          { "Key" : "gs:container", "Value" : "prod" },
+                          { "Key" : "gs:environment", "Value" : "prod" },
+                          { "Key" : "gs:category", "Value" : "prod" },
+                          { "Key" : "gs:tier", "Value" : "mgmt" },
+                          { "Key" : "gs:zone", "Value" : "b" },
+                          { "Key" : "Name", "Value" : "twain-production-management-b" } 
+                        ]
+                      }
+                    },
+        
+                    "routeTableXassociationXmgmtXb" : 
+                    {
+                      "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+                      "Properties" : 
+                      {
+                        "SubnetId" : { "Ref" : "subnetXmgmtXb" },
+                        "RouteTableId" : { "Ref" : "routeTableXexternalXb" }
+                      }
+                    },
+        
+                    "networkACLXassociationXmgmtXb" : 
+                    {
+                      "Type" : "AWS::EC2::SubnetNetworkAclAssociation",
+                      "Properties" : 
+                      {
+                        "SubnetId" : { "Ref" : "subnetXmgmtXb" },
+                        "NetworkAclId" : { "Ref" : "networkACLXopen" }
+                      }
+                    }
+  
+		,"roleXmgmtXnat": {
+		  "Type" : "AWS::IAM::Role",
+		  "Properties" : {
+			"AssumeRolePolicyDocument" : {
+			  "Version": "2012-10-17",
+			  "Statement": [ {
+				"Effect": "Allow",
+				"Principal": { "Service": [ "ec2.amazonaws.com" ] },
+				"Action": [ "sts:AssumeRole" ]
+			  } ]
+			},
+			"Path": "/",
+			"Policies": [
+			  {
+				"PolicyName": "mgmt-nat",
+				"PolicyDocument" : {
+				  "Version": "2012-10-17",
+				  "Statement": 
+				  [
+					{
+					  "Effect" : "Allow",
+					  "Action" : [
+						"ec2:DescribeInstances",
+						"ec2:ModifyInstanceAttribute",
+						"ec2:DescribeSubnets",
+						"ec2:DescribeRouteTables",
+						"ec2:CreateRoute",
+						"ec2:ReplaceRoute",
+						"ec2:DescribeAddresses",
+						"ec2:AssociateAddress"
+					  ],
+					  "Resource": "*"
+					},
+					{
+						"Resource": [
+							"arn:aws:s3:::code.ct01.gosource.com.au"
+						],
+						"Action": [
+							"s3:ListBucket"
+						],
+						"Effect": "Allow"
+					},
+					{
+						"Resource": [
+							"arn:aws:s3:::code.ct01.gosource.com.au/*"
+						],
+						"Action": [
+							"s3:GetObject",
+							"s3:ListObjects"
+						],
+						"Effect": "Allow"
+					}
+				  ]
+				}
+			  }
+			]
+		  }
+		},
+		"instanceProfileXmgmtXnat" : {
+		  "Type" : "AWS::IAM::InstanceProfile",
+		  "Properties" : {
+			"Path" : "/",
+			"Roles" : [ { "Ref" : "roleXmgmtXnat" } ]
+		  }
+		},
+		"securityGroupXmgmtXnat" : {
+		  "Type" : "AWS::EC2::SecurityGroup",
+		  "Properties" : {
+			"GroupDescription": "Security Group for HA NAT instances",
+			"VpcId": { "Ref": "vpc" },
+			"Tags" : [
+				{ "Key" : "gs:account", "Value" : "ct01" },
+				{ "Key" : "gs:project", "Value" : "twain" },
+				{ "Key" : "gs:container", "Value" : "prod" },
+				{ "Key" : "gs:environment", "Value" : "prod" },
+				{ "Key" : "gs:category", "Value" : "prod" },
+				{ "Key" : "gs:tier", "Value" : "mgmt"},
+				{ "Key" : "gs:component", "Value" : "nat"},
+				{ "Key" : "Name", "Value" : "twain-production-management-nat" }
+			],
+			"SecurityGroupIngress" : [
+					{ "IpProtocol": "tcp", "FromPort": "22", "ToPort": "22", "CidrIp": "0.0.0.0/0" },
+					{ "IpProtocol": "-1", "FromPort": "1", "ToPort": "65535", "CidrIp": "10.0.0.0/16" }
+			]
+		  }
+		},
+		"securityGroupXmgmtXallXnat" : {
+		  "Type" : "AWS::EC2::SecurityGroup",
+		  "Properties" : {
+			"GroupDescription": "Security Group for access from NAT",
+			"VpcId": { "Ref": "vpc" },
+			"Tags" : [
+				{ "Key" : "gs:account", "Value" : "ct01" },
+				{ "Key" : "gs:project", "Value" : "twain" },
+				{ "Key" : "gs:container", "Value" : "prod" },
+				{ "Key" : "gs:environment", "Value" : "prod" },
+				{ "Key" : "gs:category", "Value" : "prod" },
+				{ "Key" : "gs:tier", "Value" : "all"},
+				{ "Key" : "gs:component", "Value" : "nat"},
+				{ "Key" : "Name", "Value" : "twain-production-all-nat" }
+			],
+			"SecurityGroupIngress" : [
+					{ "IpProtocol": "tcp", "FromPort": "22", "ToPort": "22", "SourceSecurityGroupId": { "Ref" : "securityGroupXmgmtXnat"} }
+			]
+		  }
+		}
+	
+                    ,"asgXmgmtXnatXa": {
+                      "DependsOn" : [ "subnetXmgmtXa" ],
+                      "Type": "AWS::AutoScaling::AutoScalingGroup",
+                      "Metadata": {
+                        "AWS::CloudFormation::Init": {
+                          "configSets" : {
+                            "nat" : ["dirs", "bootstrap", "nat"]
+                          },
+                          "dirs": {
+                            "commands": {
+                              "01Directories" : {
+                                "command" : "mkdir --parents --mode=0755 /etc/gosource && mkdir --parents --mode=0755 /opt/gosource/bootstrap && mkdir --parents --mode=0755 /var/log/gosource",
+                                "ignoreErrors" : "false"
+                              }
+                            }
+                          },
+                          "bootstrap": {		  
+                            "packages" : {
+                                "yum" : {
+                                    "aws-cli" : []
+                                }
+                            },  
+                            "files" : {
+                              "/etc/gosource/facts.sh" : {
+                                "content" : { "Fn::Join" : ["", [
+                                        "#!/bin/bash\n",
+                                        "echo \"gs:accountRegion=ap-southeast-2\"\n",
+                                        "echo \"gs:account=ct01\"\n",
+                                        "echo \"gs:project=twain\"\n",
+                                        "echo \"gs:region=us-west-2\"\n",
+                                        "echo \"gs:container=prod\"\n",
+                                        "echo \"gs:environment=prod\"\n",
+                                        "echo \"gs:tier=mgmt\"\n",
+                                        "echo \"gs:component=nat\"\n",
+                                        "echo \"gs:zone=a\"\n",
+                                        "echo \"gs:role=nat\"\n",
+                                        "echo \"gs:credentials=credentials.ct01.gosource.com.au\"\n",
+                                        "echo \"gs:code=code.ct01.gosource.com.au\"\n",
+                                        "echo \"gs:configuration=configuration.ct01.gosource.com.au\"\n",
+                                        "echo \"gs:logs=logs.production.twain.gosource.com.au\"\n",
+                                        "echo \"gs:backups=backups.production.twain.gosource.com.au\"\n"
+                                    ]]
+                                },
+                                "mode" : "000755"
+                              },
+                              "/opt/gosource/bootstrap/fetch.sh" : {
+                                "content" : { "Fn::Join" : ["", [
+                                        "#!/bin/bash -ex\n",
+                                        "exec > >(tee /var/log/gosource/fetch.log|logger -t gosource-fetch -s 2>/dev/console) 2>&1\n",
+                                        "REGION=$(/etc/gosource/facts.sh | grep gs:accountRegion | cut -d '=' -f 2)\n",
+                                        "CODE=$(/etc/gosource/facts.sh | grep gs:code | cut -d '=' -f 2)\n",
+                                        "aws --region ${REGION} s3 sync s3://${CODE}/bootstrap/centos/ /opt/gosource/bootstrap && chmod 0500 /opt/gosource/bootstrap/*.sh\n"
+                                    ]]
+                                },
+                                "mode" : "000755"
+                              }		  	  
+                            },
+                            "commands": {
+                              "01Fetch" : {
+                                "command" : "/opt/gosource/bootstrap/fetch.sh",
+                                "ignoreErrors" : "false"
+                              },
+                              "02Initialise" : {
+                                "command" : "/opt/gosource/bootstrap/init.sh",
+                                "ignoreErrors" : "false"
+                              }
+                            }
+                          },
+                          "nat": {
+                            "commands": {
+                              "01ExecuteRouteUpdateScript" : {
+                                "command" : "/opt/gosource/bootstrap/nat.sh",
+                                "ignoreErrors" : "false"
+                              },
+                              "02ExecuteAllocateEIPScript" : {
+                                "command" : "/opt/gosource/bootstrap/eip.sh",
+                                "env" : { 
+                                        "EIP_ALLOCID" : "eipalloc-f0e78b94"
+                                },
+                                "ignoreErrors" : "false"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "Properties": {
+                        "Cooldown" : "30",
+                        "LaunchConfigurationName": {"Ref": "launchConfigXmgmtXnatXa"},
+                        "MinSize": "1",
+                        "MaxSize": "1",
+                        "VPCZoneIdentifier": [ { "Ref" : "subnetXmgmtXa"} ],
+                        "Tags" : [
+                            { "Key" : "gs:account", "Value" : "ct01", "PropagateAtLaunch" : "True" },
+                            { "Key" : "gs:project", "Value" : "twain", "PropagateAtLaunch" : "True" },
+                            { "Key" : "gs:container", "Value" : "prod", "PropagateAtLaunch" : "True" },
+                            { "Key" : "gs:environment", "Value" : "prod", "PropagateAtLaunch" : "True" },
+                            { "Key" : "gs:category", "Value" : "prod", "PropagateAtLaunch" : "True" },
+                            { "Key" : "gs:tier", "Value" : "mgmt", "PropagateAtLaunch" : "True" },
+                            { "Key" : "gs:component", "Value" : "nat", "PropagateAtLaunch" : "True"},
+                            { "Key" : "gs:zone", "Value" : "a", "PropagateAtLaunch" : "True" },
+                            { "Key" : "Name", "Value" : "twain-production-management-nat-a", "PropagateAtLaunch" : "True" }
+                        ]
+                      }
+                    },
+                
+                    "launchConfigXmgmtXnatXa": {
+                      "Type": "AWS::AutoScaling::LaunchConfiguration",
+                      "Properties": {
+                        "KeyName": "twain-production",
+                        "ImageId": "ami-77a4b816",
+                        "InstanceType": "t2.micro",
+                        "SecurityGroups" : [ { "Ref": "securityGroupXmgmtXnat" } ],
+                        "IamInstanceProfile" : { "Ref" : "instanceProfileXmgmtXnat" },
+                        "AssociatePublicIpAddress": true,
+                        "UserData": {
+                          "Fn::Base64": { "Fn::Join": [ "", [
+                            "#!/bin/bash -ex\n",
+                            "exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1\n",
+                            "yum install -y aws-cfn-bootstrap\n",				  
+                            "# Remainder of configuration via metadata\n",
+                            "/opt/aws/bin/cfn-init -v",
+                            "         --stack ", { "Ref" : "AWS::StackName" },
+                            "         --resource asgXmgmtXnatXa",
+                            "         --region us-west-2 --configsets nat\n"
+                          ] ] }
+                        }
+                      }
+                    }
+                    ,"asgXmgmtXnatXb": {
+                      "DependsOn" : [ "subnetXmgmtXb" ],
+                      "Type": "AWS::AutoScaling::AutoScalingGroup",
+                      "Metadata": {
+                        "AWS::CloudFormation::Init": {
+                          "configSets" : {
+                            "nat" : ["dirs", "bootstrap", "nat"]
+                          },
+                          "dirs": {
+                            "commands": {
+                              "01Directories" : {
+                                "command" : "mkdir --parents --mode=0755 /etc/gosource && mkdir --parents --mode=0755 /opt/gosource/bootstrap && mkdir --parents --mode=0755 /var/log/gosource",
+                                "ignoreErrors" : "false"
+                              }
+                            }
+                          },
+                          "bootstrap": {		  
+                            "packages" : {
+                                "yum" : {
+                                    "aws-cli" : []
+                                }
+                            },  
+                            "files" : {
+                              "/etc/gosource/facts.sh" : {
+                                "content" : { "Fn::Join" : ["", [
+                                        "#!/bin/bash\n",
+                                        "echo \"gs:accountRegion=ap-southeast-2\"\n",
+                                        "echo \"gs:account=ct01\"\n",
+                                        "echo \"gs:project=twain\"\n",
+                                        "echo \"gs:region=us-west-2\"\n",
+                                        "echo \"gs:container=prod\"\n",
+                                        "echo \"gs:environment=prod\"\n",
+                                        "echo \"gs:tier=mgmt\"\n",
+                                        "echo \"gs:component=nat\"\n",
+                                        "echo \"gs:zone=b\"\n",
+                                        "echo \"gs:role=nat\"\n",
+                                        "echo \"gs:credentials=credentials.ct01.gosource.com.au\"\n",
+                                        "echo \"gs:code=code.ct01.gosource.com.au\"\n",
+                                        "echo \"gs:configuration=configuration.ct01.gosource.com.au\"\n",
+                                        "echo \"gs:logs=logs.production.twain.gosource.com.au\"\n",
+                                        "echo \"gs:backups=backups.production.twain.gosource.com.au\"\n"
+                                    ]]
+                                },
+                                "mode" : "000755"
+                              },
+                              "/opt/gosource/bootstrap/fetch.sh" : {
+                                "content" : { "Fn::Join" : ["", [
+                                        "#!/bin/bash -ex\n",
+                                        "exec > >(tee /var/log/gosource/fetch.log|logger -t gosource-fetch -s 2>/dev/console) 2>&1\n",
+                                        "REGION=$(/etc/gosource/facts.sh | grep gs:accountRegion | cut -d '=' -f 2)\n",
+                                        "CODE=$(/etc/gosource/facts.sh | grep gs:code | cut -d '=' -f 2)\n",
+                                        "aws --region ${REGION} s3 sync s3://${CODE}/bootstrap/centos/ /opt/gosource/bootstrap && chmod 0500 /opt/gosource/bootstrap/*.sh\n"
+                                    ]]
+                                },
+                                "mode" : "000755"
+                              }		  	  
+                            },
+                            "commands": {
+                              "01Fetch" : {
+                                "command" : "/opt/gosource/bootstrap/fetch.sh",
+                                "ignoreErrors" : "false"
+                              },
+                              "02Initialise" : {
+                                "command" : "/opt/gosource/bootstrap/init.sh",
+                                "ignoreErrors" : "false"
+                              }
+                            }
+                          },
+                          "nat": {
+                            "commands": {
+                              "01ExecuteRouteUpdateScript" : {
+                                "command" : "/opt/gosource/bootstrap/nat.sh",
+                                "ignoreErrors" : "false"
+                              },
+                              "02ExecuteAllocateEIPScript" : {
+                                "command" : "/opt/gosource/bootstrap/eip.sh",
+                                "env" : { 
+                                        "EIP_ALLOCID" : "eipalloc-d5e38fb1"
+                                },
+                                "ignoreErrors" : "false"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "Properties": {
+                        "Cooldown" : "30",
+                        "LaunchConfigurationName": {"Ref": "launchConfigXmgmtXnatXb"},
+                        "MinSize": "1",
+                        "MaxSize": "1",
+                        "VPCZoneIdentifier": [ { "Ref" : "subnetXmgmtXb"} ],
+                        "Tags" : [
+                            { "Key" : "gs:account", "Value" : "ct01", "PropagateAtLaunch" : "True" },
+                            { "Key" : "gs:project", "Value" : "twain", "PropagateAtLaunch" : "True" },
+                            { "Key" : "gs:container", "Value" : "prod", "PropagateAtLaunch" : "True" },
+                            { "Key" : "gs:environment", "Value" : "prod", "PropagateAtLaunch" : "True" },
+                            { "Key" : "gs:category", "Value" : "prod", "PropagateAtLaunch" : "True" },
+                            { "Key" : "gs:tier", "Value" : "mgmt", "PropagateAtLaunch" : "True" },
+                            { "Key" : "gs:component", "Value" : "nat", "PropagateAtLaunch" : "True"},
+                            { "Key" : "gs:zone", "Value" : "b", "PropagateAtLaunch" : "True" },
+                            { "Key" : "Name", "Value" : "twain-production-management-nat-b", "PropagateAtLaunch" : "True" }
+                        ]
+                      }
+                    },
+                
+                    "launchConfigXmgmtXnatXb": {
+                      "Type": "AWS::AutoScaling::LaunchConfiguration",
+                      "Properties": {
+                        "KeyName": "twain-production",
+                        "ImageId": "ami-77a4b816",
+                        "InstanceType": "t2.micro",
+                        "SecurityGroups" : [ { "Ref": "securityGroupXmgmtXnat" } ],
+                        "IamInstanceProfile" : { "Ref" : "instanceProfileXmgmtXnat" },
+                        "AssociatePublicIpAddress": true,
+                        "UserData": {
+                          "Fn::Base64": { "Fn::Join": [ "", [
+                            "#!/bin/bash -ex\n",
+                            "exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1\n",
+                            "yum install -y aws-cfn-bootstrap\n",				  
+                            "# Remainder of configuration via metadata\n",
+                            "/opt/aws/bin/cfn-init -v",
+                            "         --stack ", { "Ref" : "AWS::StackName" },
+                            "         --resource asgXmgmtXnatXb",
+                            "         --region us-west-2 --configsets nat\n"
+                          ] ] }
+                        }
+                      }
+                    }
+  
+  },
+
+  "Outputs" : 
+  {
+		"vpcXcontainerXvpc" : 
+		{
+		  "Value" : { "Ref" : "vpc" }
+		},
+		"igwXcontainerXigw" : 
+		{
+		  "Value" : { "Ref" : "igw" }
+		}
+			,"securityGroupXmgmtXnat" : 
+			{
+				"Value" : { "Ref" : "securityGroupXmgmtXallXnat" }
+			}
+                    ,"subnetXelbXa" : 
+                    {
+                      "Value" : { "Ref" : "subnetXelbXa" }
+                    }
+                    ,"subnetXelbXb" : 
+                    {
+                      "Value" : { "Ref" : "subnetXelbXb" }
+                    }
+                    ,"subnetXwebXa" : 
+                    {
+                      "Value" : { "Ref" : "subnetXwebXa" }
+                    }
+                    ,"subnetXwebXb" : 
+                    {
+                      "Value" : { "Ref" : "subnetXwebXb" }
+                    }
+                    ,"subnetXdbXa" : 
+                    {
+                      "Value" : { "Ref" : "subnetXdbXa" }
+                    }
+                    ,"subnetXdbXb" : 
+                    {
+                      "Value" : { "Ref" : "subnetXdbXb" }
+                    }
+                    ,"subnetXmgmtXa" : 
+                    {
+                      "Value" : { "Ref" : "subnetXmgmtXa" }
+                    }
+                    ,"subnetXmgmtXb" : 
+                    {
+                      "Value" : { "Ref" : "subnetXmgmtXb" }
+                    }
+  }
+}
+
+
+
+
+
+

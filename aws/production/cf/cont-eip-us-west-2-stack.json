@@ -1,0 +1,34 @@
+{
+    "Stacks": [
+        {
+            "StackId": "arn:aws:cloudformation:us-west-2:355178332009:stack/twain-production-cont-eip/d893dd70-1651-11e6-a3fe-50a686be73f2", 
+            "Tags": [], 
+            "Outputs": [
+                {
+                    "OutputKey": "eipXmgmtXnatXaXip", 
+                    "OutputValue": "52.32.127.164"
+                }, 
+                {
+                    "OutputKey": "eipXmgmtXnatXaXid", 
+                    "OutputValue": "eipalloc-f0e78b94"
+                }, 
+                {
+                    "OutputKey": "eipXmgmtXnatXbXip", 
+                    "OutputValue": "52.36.148.209"
+                }, 
+                {
+                    "OutputKey": "eipXmgmtXnatXbXid", 
+                    "OutputValue": "eipalloc-d5e38fb1"
+                }
+            ], 
+            "CreationTime": "2016-05-10T01:52:26.319Z", 
+            "Capabilities": [
+                "CAPABILITY_IAM"
+            ], 
+            "StackName": "twain-production-cont-eip", 
+            "NotificationARNs": [], 
+            "StackStatus": "CREATE_COMPLETE", 
+            "DisableRollback": false
+        }
+    ]
+}

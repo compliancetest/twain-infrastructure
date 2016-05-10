@@ -1,0 +1,42 @@
+{
+    "Stacks": [
+        {
+            "StackId": "arn:aws:cloudformation:us-west-2:355178332009:stack/twain-production-soln-db/20bbdef0-1665-11e6-9758-50d5ca789e4a", 
+            "Tags": [], 
+            "Outputs": [
+                {
+                    "OutputKey": "securityGroupXdbXmySQL", 
+                    "OutputValue": "sg-74fcf613"
+                }, 
+                {
+                    "OutputKey": "rdsXdbXmySQLXdns", 
+                    "OutputValue": "twain-production-database-mysql.cxwpegmisug9.us-west-2.rds.amazonaws.com"
+                }, 
+                {
+                    "OutputKey": "rdsXdbXmySQLXport", 
+                    "OutputValue": "3306"
+                }, 
+                {
+                    "OutputKey": "rdsXdbXmySQLXdatabasename", 
+                    "OutputValue": "twain"
+                }, 
+                {
+                    "OutputKey": "rdsXdbXmySQLXusername", 
+                    "OutputValue": "root"
+                }, 
+                {
+                    "OutputKey": "rdsXdbXmySQLXpassword", 
+                    "OutputValue": "pjLsJNXUKgsDvDpvAr36"
+                }
+            ], 
+            "CreationTime": "2016-05-10T04:10:27.817Z", 
+            "Capabilities": [
+                "CAPABILITY_IAM"
+            ], 
+            "StackName": "twain-production-soln-db", 
+            "NotificationARNs": [], 
+            "StackStatus": "CREATE_COMPLETE", 
+            "DisableRollback": false
+        }
+    ]
+}

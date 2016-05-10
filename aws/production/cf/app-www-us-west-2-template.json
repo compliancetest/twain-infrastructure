@@ -1,0 +1,216 @@
+
+
+
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+  "Resources" : 
+  {
+                                    
+    "ecsTaskXwebXwwwXwww" : {
+      "Type" : "AWS::ECS::TaskDefinition",
+      "Properties" : {
+        "ContainerDefinitions" : [
+                {
+                            "Name" : "web-www-www",
+					  		"Image" : "docker.ct01.gosource.com.au/website/5e656ebd624756674d6a963bfa3ecaaa9ef27aa9",
+                            "Environment" : [
+                                {
+                                    "Name" : "DB_HOST",
+                                    "Value" : "twain-production-database-mysql.cxwpegmisug9.us-west-2.rds.amazonaws.com"
+                                },
+                                {
+                                    "Name" : "DB_PORT",
+                                    "Value" : "3306"
+                                },
+                                {
+                                    "Name" : "DB_NAME",
+                                    "Value" : "twain"
+                                },
+                                {
+                                    "Name" : "DB_USERNAME",
+                                    "Value" : "root"
+                                },
+                                {
+                                    "Name" : "DB_PASSWORD",
+                                    "Value" : "pjLsJNXUKgsDvDpvAr36"
+                                },
+                                {
+                                    "Name" : "SMTP_HOST",
+                                    "Value" : "email-smtp.us-west-2.amazonaws.com"
+                                },
+                                {
+                                    "Name" : "SMTP_PORT",
+                                    "Value" : "587"
+                                },
+                                {
+                                    "Name" : "SMTP_USER",
+                                    "Value" : "AKIAIWAVUHSRJUWALCEA"
+                                },
+                                {
+                                    "Name" : "SMTP_PASSWORD",
+                                    "Value" : "AuDVfgFVjhvLVFY99v95V5bhMmYPJSueE7vUDl7fqWSA"
+                                },
+                                {
+                                    "Name" : "SMTP_FROM",
+                                    "Value" : "noreply@twain.gosource.com.au"
+                                },
+                                {
+                                    "Name" : "BUCKET_TRANSACTIONS",
+                                    "Value" : "captures.production.twain.gosource.com.au"
+                                },
+                                {
+                                    "Name" : "BUCKET_WEBSITE",
+                                    "Value" : "www.production.twain.gosource.com.au"
+                                },
+                                {
+                                    "Name" : "BUCKET_REGION",
+                                    "Value" : "us-west-2"
+                                },
+                                {
+                                    "Name" : "ENVIRONMENT",
+                                    "Value" : "production"
+                                },
+                                {
+                                    "Name" : "CONFIGURATION_REFERENCE",
+                                    "Value" : "cxxx"
+                                },
+                                {
+                                    "Name" : "BUILD_REFERENCE",
+                                    "Value" : "5e656ebd624756674d6a963bfa3ecaaa9ef27aa9"
+                                },
+                                {
+                                    "Name" : "DEPLOY_TIMESTAMP",
+                                    "Value" : "2016-05-10T05:53:55Z"
+                                }
+                            ],
+                                "PortMappings" : [
+                                      {
+                                          "ContainerPort" : 80,
+                                         "HostPort" : 80
+                                      }
+                                ],
+                            "Essential" : true,
+                            "Memory" : "3500",
+                            "Cpu" : "1024",
+                            "LogConfiguration" : {
+                                    "LogDriver" : "fluentd",
+                                    "Options" : { "tag" : "docker.twain.prod.web.www.www"}
+                            }
+                },
+                {
+                            "Name" : "web-www-cleanup",
+                            "Image" : "docker.ct01.gosource.com.au/cleanup:1.0",
+                            "Environment" : [
+                                {
+                                    "Name" : "CLEAN_PERIOD",
+                                    "Value" : "900"
+                                },
+                                {
+                                    "Name" : "DELAY_TIME",
+                                    "Value" : "10800"
+                                }
+                            ],
+                            "MountPoints": [
+                                {
+                                    "SourceVolume": "dockerDaemon",
+                                    "ContainerPath": "/var/run/docker.sock",
+                                    "ReadOnly": false
+                                },
+                                {
+                                    "SourceVolume": "dockerFiles",
+                                    "ContainerPath": "/var/lib/docker",
+                                    "ReadOnly": false
+                                }
+                            ],
+                            "Essential" : false,
+                            "Memory" : "64",
+                            "Cpu" : "8",
+                            "LogConfiguration" : {
+                                    "LogDriver" : "fluentd",
+                                    "Options" : { "tag" : "docker.twain.prod.web.www.cleanup"}
+                            }
+                }
+        ]
+            ,"Volumes" : [
+                            
+                            {
+                                "Host": {
+                                    "SourcePath": "/var/run/docker.sock"
+                                    },
+                                    "Name": "dockerDaemon"
+                            },
+                            {
+                                "Host": {
+                                    "SourcePath": "/var/lib/docker"
+                                    },
+                                    "Name": "dockerFiles"
+                            }
+            ]
+      }
+    }
+                                    ,"ecsServiceXwebXwwwXwww" : {
+                                      "Type" : "AWS::ECS::Service",
+                                      "Properties" : {
+                                        "Cluster" : "twain-production-soln-www-ecsXwebXwww-1J1ACIAZL3O19",
+                                        "DeploymentConfiguration" : {
+                                                "MaximumPercent" : 100,
+                                                "MinimumHealthyPercent" : 50
+                                        },
+                                            "DesiredCount" : "2",
+                                            "LoadBalancers" : [
+                                                                
+                                                                {
+                                                                    "LoadBalancerName" : "twain-prod-elb-www",
+                                                                    "ContainerName" : "web-www-www",
+                                                                    "ContainerPort" : 80
+                                                                }
+                                            ],
+                                            "Role" : "twain-production-soln-www-roleXwebXwwwXservice-ZW1RBW7L9NCC",
+                                        "TaskDefinition" : { "Ref" : "ecsTaskXwebXwwwXwww" }
+                                      }
+                                    }
+                                                ,"policyXwebXwwwXs3" : {
+                                                  "Type": "AWS::IAM::Policy",
+                                                  "Properties": {
+                                                    "PolicyDocument" : {
+                                                        "Version": "2012-10-17",
+                                                        "Statement": [
+                                                          {
+                                                            "Resource": [
+                                                                "arn:aws:s3:::captures.production.twain.gosource.com.au",
+                                                                "arn:aws:s3:::www.production.twain.gosource.com.au"
+                                                            ],
+                                                            "Action": [
+                                                                "s3:List*"
+                                                            ],
+                                                            "Effect": "Allow"
+                                                          },
+                                                          {
+                                                            "Resource": [
+                                                                "arn:aws:s3:::captures.production.twain.gosource.com.au/*",
+                                                                "arn:aws:s3:::www.production.twain.gosource.com.au/*"
+                                                            ],
+                                                            "Action": [
+                                                                "s3:*"
+                                                            ],
+                                                            "Effect": "Allow"
+                                                          }
+                                                        ]
+                                                    },
+                                                    "PolicyName": "web-www-s3",
+                                                    "Roles" : [ "twain-production-soln-www-roleXwebXwww-1IL7OWMG92Z52"]
+                                                  }
+                                                }
+  },
+  "Outputs" : 
+  {
+                                    
+                                    "ecsServiceXwebXwwwXwww" : {
+                                        "Value" : { "Ref" : "ecsServiceXwebXwwwXwww" }
+                                    },
+                                    "ecsTaskXwebXwwwXwww" : {
+                                        "Value" : { "Ref" : "ecsTaskXwebXwwwXwww" }
+                                    }
+  }
+}
+
