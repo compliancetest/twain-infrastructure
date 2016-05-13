@@ -1,0 +1,62 @@
+{
+    "Stacks": [
+        {
+            "StackId": "arn:aws:cloudformation:us-west-2:756631605271:stack/twain-production-cont-vpc/16909f60-18db-11e6-906f-50a68a0e328e", 
+            "Tags": [], 
+            "Outputs": [
+                {
+                    "OutputKey": "vpcXcontainerXvpc", 
+                    "OutputValue": "vpc-b049ffd4"
+                }, 
+                {
+                    "OutputKey": "igwXcontainerXigw", 
+                    "OutputValue": "igw-76e0e113"
+                }, 
+                {
+                    "OutputKey": "securityGroupXmgmtXnat", 
+                    "OutputValue": "sg-5e0a1839"
+                }, 
+                {
+                    "OutputKey": "subnetXelbXa", 
+                    "OutputValue": "subnet-66bd6a10"
+                }, 
+                {
+                    "OutputKey": "subnetXelbXb", 
+                    "OutputValue": "subnet-b462d0d0"
+                }, 
+                {
+                    "OutputKey": "subnetXwebXa", 
+                    "OutputValue": "subnet-78bd6a0e"
+                }, 
+                {
+                    "OutputKey": "subnetXwebXb", 
+                    "OutputValue": "subnet-b762d0d3"
+                }, 
+                {
+                    "OutputKey": "subnetXdbXa", 
+                    "OutputValue": "subnet-79bd6a0f"
+                }, 
+                {
+                    "OutputKey": "subnetXdbXb", 
+                    "OutputValue": "subnet-b562d0d1"
+                }, 
+                {
+                    "OutputKey": "subnetXmgmtXa", 
+                    "OutputValue": "subnet-7bbd6a0d"
+                }, 
+                {
+                    "OutputKey": "subnetXmgmtXb", 
+                    "OutputValue": "subnet-aa62d0ce"
+                }
+            ], 
+            "CreationTime": "2016-05-13T07:19:53.703Z", 
+            "Capabilities": [
+                "CAPABILITY_IAM"
+            ], 
+            "StackName": "twain-production-cont-vpc", 
+            "NotificationARNs": [], 
+            "StackStatus": "CREATE_COMPLETE", 
+            "DisableRollback": false
+        }
+    ]
+}
