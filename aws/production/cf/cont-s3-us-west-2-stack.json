@@ -1,0 +1,26 @@
+{
+    "Stacks": [
+        {
+            "StackId": "arn:aws:cloudformation:us-west-2:756631605271:stack/twain-production-cont-s3/29584780-18d9-11e6-ac02-503f2a2cee4a", 
+            "Tags": [], 
+            "Outputs": [
+                {
+                    "OutputKey": "s3XcontainerXlogs", 
+                    "OutputValue": "logs.production.twain.gosource.com.au"
+                }, 
+                {
+                    "OutputKey": "s3XcontainerXbackups", 
+                    "OutputValue": "backups.production.twain.gosource.com.au"
+                }
+            ], 
+            "CreationTime": "2016-05-13T07:06:06.209Z", 
+            "Capabilities": [
+                "CAPABILITY_IAM"
+            ], 
+            "StackName": "twain-production-cont-s3", 
+            "NotificationARNs": [], 
+            "StackStatus": "CREATE_COMPLETE", 
+            "DisableRollback": false
+        }
+    ]
+}
