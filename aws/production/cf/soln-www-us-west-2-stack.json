@@ -1,0 +1,42 @@
+{
+    "Stacks": [
+        {
+            "StackId": "arn:aws:cloudformation:us-west-2:756631605271:stack/twain-production-soln-www/eb4015f0-1a8f-11e6-9758-50d5ca789e4a", 
+            "Tags": [], 
+            "Outputs": [
+                {
+                    "OutputKey": "securityGroupXwebXwww", 
+                    "OutputValue": "sg-df243ab8"
+                }, 
+                {
+                    "OutputKey": "ecsXwebXwww", 
+                    "OutputValue": "twain-production-soln-www-ecsXwebXwww-1JY34OHLI01EB"
+                }, 
+                {
+                    "OutputKey": "roleXwebXwww", 
+                    "OutputValue": "twain-production-soln-www-roleXwebXwww-5F0DGPW04F7V"
+                }, 
+                {
+                    "OutputKey": "roleXwebXwwwXarn", 
+                    "OutputValue": "arn:aws:iam::756631605271:role/twain-production-soln-www-roleXwebXwww-5F0DGPW04F7V"
+                }, 
+                {
+                    "OutputKey": "roleXwebXwwwXservice", 
+                    "OutputValue": "twain-production-soln-www-roleXwebXwwwXservice-1JDB7B4TDECB5"
+                }, 
+                {
+                    "OutputKey": "roleXwebXwwwXserviceXarn", 
+                    "OutputValue": "arn:aws:iam::756631605271:role/twain-production-soln-www-roleXwebXwwwXservice-1JDB7B4TDECB5"
+                }
+            ], 
+            "CreationTime": "2016-05-15T11:26:51.098Z", 
+            "Capabilities": [
+                "CAPABILITY_IAM"
+            ], 
+            "StackName": "twain-production-soln-www", 
+            "NotificationARNs": [], 
+            "StackStatus": "CREATE_COMPLETE", 
+            "DisableRollback": false
+        }
+    ]
+}
