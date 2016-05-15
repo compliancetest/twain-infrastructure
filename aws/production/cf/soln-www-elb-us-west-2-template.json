@@ -1,0 +1,113 @@
+
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+  "Resources" : 
+  {
+					
+						"securityGroupXelbXwww" : {
+						  "Type" : "AWS::EC2::SecurityGroup",
+						  "Properties" : {
+							"GroupDescription": "Security Group for elb-www",
+							"VpcId": "vpc-b049ffd4",
+							"Tags" : [
+								{ "Key" : "gs:account", "Value" : "ct02" },
+								{ "Key" : "gs:project", "Value" : "twain" },
+								{ "Key" : "gs:container", "Value" : "prod" },
+								{ "Key" : "gs:environment", "Value" : "prod" },
+								{ "Key" : "gs:category", "Value" : "prod" },
+								{ "Key" : "gs:tier", "Value" : "elb" },
+								{ "Key" : "gs:component", "Value" : "www" },
+								{ "Key" : "Name", "Value" : "twain-production-elb-www" }
+							]
+						  }
+						},
+							"securityGroupIngressXelbXwwwX443" : {
+							  "Type" : "AWS::EC2::SecurityGroupIngress",
+							  "Properties" : {
+								"GroupId": {"Ref" : "securityGroupXelbXwww"},
+								"IpProtocol": "tcp", 
+								"FromPort": "443", 
+								"ToPort": "443", 
+								"CidrIp": "0.0.0.0/0"
+							  }
+							},
+							"securityGroupIngressXelbXwwwX80" : {
+							  "Type" : "AWS::EC2::SecurityGroupIngress",
+							  "Properties" : {
+								"GroupId": {"Ref" : "securityGroupXelbXwww"},
+								"IpProtocol": "tcp", 
+								"FromPort": "80", 
+								"ToPort": "80", 
+								"CidrIp": "0.0.0.0/0"
+							  }
+							},
+						"elbXelbXwww" : {
+						  "Type" : "AWS::ElasticLoadBalancing::LoadBalancer",
+						  "Properties" : {
+								"Subnets" : [
+										"subnet-66bd6a10",
+										"subnet-b462d0d0"
+								],
+								"CrossZone" : true,
+							"Listeners" : [ 
+									{
+									  "LoadBalancerPort" : "443",
+									  "Protocol" : "HTTPS",
+									  "InstancePort" : "80",
+									  "InstanceProtocol" : "HTTP",
+									  "SSLCertificateId" : { "Fn::Join" : ["", ["arn:aws:iam::", {"Ref" : "AWS::AccountId"}, ":server-certificate/ssl/twain-production/twain-production-ssl" ]] } 								  
+									},
+									{
+									  "LoadBalancerPort" : "80",
+									  "Protocol" : "HTTP",
+									  "InstancePort" : "80",
+									  "InstanceProtocol" : "HTTP" 								  
+									}
+							],
+							"HealthCheck" : {
+							  "Target" : "HTTP:80/",
+							  "HealthyThreshold" : "2",
+							  "UnhealthyThreshold" : "10",
+							  "Interval" : "30",
+							  "Timeout" : "29"
+							},
+								"AccessLoggingPolicy" : {
+								  "EmitInterval" : 5,
+								  "Enabled" : true,
+								  "S3BucketName" : "logs.production.twain.gosource.com.au"
+								},
+							"Scheme" : "internet-facing",
+							"SecurityGroups":[ {"Ref" : "securityGroupXelbXwww"} ],
+							"LoadBalancerName" : "twain-prod-elb-www",
+							"Tags" : [
+								{ "Key" : "gs:account", "Value" : "ct02" },
+								{ "Key" : "gs:project", "Value" : "twain" },
+								{ "Key" : "gs:container", "Value" : "prod" },
+								{ "Key" : "gs:environment", "Value" : "prod" },
+								{ "Key" : "gs:category", "Value" : "prod" },
+								{ "Key" : "gs:tier", "Value" : "elb" },
+								{ "Key" : "gs:component", "Value" : "www" },
+								{ "Key" : "Name", "Value" : "twain-production-elb-www" } 
+							]
+						  }
+						}
+  },
+
+  "Outputs" : 
+  {
+						
+						"securityGroupXelbXwww" : {
+							"Value" : { "Ref" : "securityGroupXelbXwww" }
+						}
+						,
+						"elbXelbXwww" : {
+							"Value" : { "Ref" : "elbXelbXwww" }
+						},
+						"elbXelbXwwwXdns" : {
+							"Value" : { "Fn::GetAtt" : ["elbXelbXwww", "DNSName"] }
+						}
+
+  }
+}
+
+

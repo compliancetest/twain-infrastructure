@@ -1,0 +1,30 @@
+{
+    "Stacks": [
+        {
+            "StackId": "arn:aws:cloudformation:us-west-2:756631605271:stack/twain-production-soln-www-elb/8dd9bea0-1a8c-11e6-88a6-50a68a0e32f2", 
+            "Tags": [], 
+            "Outputs": [
+                {
+                    "OutputKey": "securityGroupXelbXwww", 
+                    "OutputValue": "sg-112a3476"
+                }, 
+                {
+                    "OutputKey": "elbXelbXwww", 
+                    "OutputValue": "twain-prod-elb-www"
+                }, 
+                {
+                    "OutputKey": "elbXelbXwwwXdns", 
+                    "OutputValue": "twain-prod-elb-www-327099328.us-west-2.elb.amazonaws.com"
+                }
+            ], 
+            "CreationTime": "2016-05-15T11:02:45.931Z", 
+            "Capabilities": [
+                "CAPABILITY_IAM"
+            ], 
+            "StackName": "twain-production-soln-www-elb", 
+            "NotificationARNs": [], 
+            "StackStatus": "CREATE_COMPLETE", 
+            "DisableRollback": false
+        }
+    ]
+}
