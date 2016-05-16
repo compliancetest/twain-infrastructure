@@ -65,7 +65,7 @@
 									}
 							],
 							"HealthCheck" : {
-							  "Target" : "HTTP:80/",
+							  "Target" : "HTTP:80/healthcheck.html",
 							  "HealthyThreshold" : "2",
 							  "UnhealthyThreshold" : "10",
 							  "Interval" : "30",
