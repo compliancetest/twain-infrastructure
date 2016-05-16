@@ -1,0 +1,60 @@
+
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+  "Resources" : 
+  {
+					
+						"s3XwebXwww" : {
+						  "Type" : "AWS::S3::Bucket",
+						  "Properties" : {
+								"BucketName" : "www.production.twain.gosource.com.au",
+							"Tags" : [ 
+							  { "Key" : "gs:account", "Value" : "ct02" },
+							  { "Key" : "gs:project", "Value" : "twain" },
+							  { "Key" : "gs:container", "Value" : "prod" },
+							  { "Key" : "gs:environment", "Value" : "prod" },
+							  { "Key" : "gs:category", "Value" : "prod" },
+							  { "Key" : "gs:tier", "Value" : "web" },
+							  { "Key" : "gs:component", "Value" : "www" }
+							]
+						  }
+						}
+					,
+						"s3XwebXcaptures" : {
+						  "Type" : "AWS::S3::Bucket",
+						  "Properties" : {
+								"BucketName" : "captures.production.twain.gosource.com.au",
+							"Tags" : [ 
+							  { "Key" : "gs:account", "Value" : "ct02" },
+							  { "Key" : "gs:project", "Value" : "twain" },
+							  { "Key" : "gs:container", "Value" : "prod" },
+							  { "Key" : "gs:environment", "Value" : "prod" },
+							  { "Key" : "gs:category", "Value" : "prod" },
+							  { "Key" : "gs:tier", "Value" : "web" },
+							  { "Key" : "gs:component", "Value" : "captures" }
+							]
+						  }
+						}
+  },
+
+  "Outputs" : 
+  {
+						
+						"s3XwebXwww" : {
+							"Value" : { "Ref" : "s3XwebXwww" }
+						},
+						"s3XwebXwwwXurl" : {
+							"Value" : { "Fn::GetAtt" : ["s3XwebXwww", "WebsiteURL"] }
+						}
+						,
+						"s3XwebXcaptures" : {
+							"Value" : { "Ref" : "s3XwebXcaptures" }
+						},
+						"s3XwebXcapturesXurl" : {
+							"Value" : { "Fn::GetAtt" : ["s3XwebXcaptures", "WebsiteURL"] }
+						}
+
+  }
+}
+
+
