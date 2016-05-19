@@ -1,7 +1,7 @@
 {
     "Stacks": [
         {
-            "StackId": "arn:aws:cloudformation:us-west-2:756631605271:stack/twain-production-soln-www-sqs/dd9e2f50-1d8b-11e6-8951-503f2a2ceeae", 
+            "StackId": "arn:aws:cloudformation:us-west-2:756631605271:stack/twain-production-soln-www-sqs/5b7e54b0-1d94-11e6-b488-50ba1b9b0aa6", 
             "Tags": [], 
             "Outputs": [
                 {
@@ -9,7 +9,7 @@
                     "OutputValue": "twain-production-transactions"
                 }, 
                 {
-                    "OutputKey": "sqsXwebXtransactionsurl", 
+                    "OutputKey": "sqsXwebXtransactionsXurl", 
                     "OutputValue": "https://sqs.us-west-2.amazonaws.com/756631605271/twain-production-transactions"
                 }, 
                 {
@@ -17,7 +17,7 @@
                     "OutputValue": "arn:aws:sqs:us-west-2:756631605271:twain-production-transactions"
                 }
             ], 
-            "CreationTime": "2016-05-19T06:40:25.642Z", 
+            "CreationTime": "2016-05-19T07:36:10.884Z", 
             "Capabilities": [
                 "CAPABILITY_IAM"
             ], 

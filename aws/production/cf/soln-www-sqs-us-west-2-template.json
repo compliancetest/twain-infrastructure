@@ -23,7 +23,7 @@
 						"sqsXwebXtransactions" : {
 							"Value" : { "Fn::GetAtt" : ["sqsXwebXtransactions", "QueueName"] }
 						},
-						"sqsXwebXtransactionsurl" : {
+						"sqsXwebXtransactionsXurl" : {
 							"Value" : { "Ref" : "sqsXwebXtransactions" }
 						},
 						"sqsXwebXtransactionsXarn" : {
