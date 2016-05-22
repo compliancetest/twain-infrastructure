@@ -1,0 +1,30 @@
+{
+    "Stacks": [
+        {
+            "StackId": "arn:aws:cloudformation:us-west-2:355178332009:stack/twain-integration-soln-www-elb/2b2ef230-1ffe-11e6-97f6-50d5ca789e82", 
+            "Tags": [], 
+            "Outputs": [
+                {
+                    "OutputKey": "securityGroupXelbXwww", 
+                    "OutputValue": "sg-a3c52ac5"
+                }, 
+                {
+                    "OutputKey": "elbXelbXwww", 
+                    "OutputValue": "twain-int-elb-www"
+                }, 
+                {
+                    "OutputKey": "elbXelbXwwwXdns", 
+                    "OutputValue": "twain-int-elb-www-1071175351.us-west-2.elb.amazonaws.com"
+                }
+            ], 
+            "CreationTime": "2016-05-22T09:18:38.813Z", 
+            "Capabilities": [
+                "CAPABILITY_IAM"
+            ], 
+            "StackName": "twain-integration-soln-www-elb", 
+            "NotificationARNs": [], 
+            "StackStatus": "CREATE_COMPLETE", 
+            "DisableRollback": false
+        }
+    ]
+}
