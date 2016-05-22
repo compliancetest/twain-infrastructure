@@ -1,0 +1,30 @@
+{
+    "Stacks": [
+        {
+            "StackId": "arn:aws:cloudformation:us-west-2:355178332009:stack/twain-integration-soln-www-sqs/155f2510-1ffe-11e6-a9b7-503f20f2ad1e", 
+            "Tags": [], 
+            "Outputs": [
+                {
+                    "OutputKey": "sqsXwebXtransactions", 
+                    "OutputValue": "twain-integration-transactions"
+                }, 
+                {
+                    "OutputKey": "sqsXwebXtransactionsXurl", 
+                    "OutputValue": "https://sqs.us-west-2.amazonaws.com/355178332009/twain-integration-transactions"
+                }, 
+                {
+                    "OutputKey": "sqsXwebXtransactionsXarn", 
+                    "OutputValue": "arn:aws:sqs:us-west-2:355178332009:twain-integration-transactions"
+                }
+            ], 
+            "CreationTime": "2016-05-22T09:18:02.219Z", 
+            "Capabilities": [
+                "CAPABILITY_IAM"
+            ], 
+            "StackName": "twain-integration-soln-www-sqs", 
+            "NotificationARNs": [], 
+            "StackStatus": "CREATE_COMPLETE", 
+            "DisableRollback": false
+        }
+    ]
+}
