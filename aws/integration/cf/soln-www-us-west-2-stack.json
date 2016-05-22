@@ -1,0 +1,42 @@
+{
+    "Stacks": [
+        {
+            "StackId": "arn:aws:cloudformation:us-west-2:355178332009:stack/twain-integration-soln-www/081feb90-1fff-11e6-8d8e-503f2a2ceeba", 
+            "Tags": [], 
+            "Outputs": [
+                {
+                    "OutputKey": "securityGroupXwebXwww", 
+                    "OutputValue": "sg-a1c32cc7"
+                }, 
+                {
+                    "OutputKey": "ecsXwebXwww", 
+                    "OutputValue": "twain-integration-soln-www-ecsXwebXwww-17GUKYLL9RROJ"
+                }, 
+                {
+                    "OutputKey": "roleXwebXwww", 
+                    "OutputValue": "twain-integration-soln-www-roleXwebXwww-4TKPY2344WJF"
+                }, 
+                {
+                    "OutputKey": "roleXwebXwwwXarn", 
+                    "OutputValue": "arn:aws:iam::355178332009:role/twain-integration-soln-www-roleXwebXwww-4TKPY2344WJF"
+                }, 
+                {
+                    "OutputKey": "roleXwebXwwwXservice", 
+                    "OutputValue": "twain-integration-soln-www-roleXwebXwwwXservice-1WJHFWS31ACHQ"
+                }, 
+                {
+                    "OutputKey": "roleXwebXwwwXserviceXarn", 
+                    "OutputValue": "arn:aws:iam::355178332009:role/twain-integration-soln-www-roleXwebXwwwXservice-1WJHFWS31ACHQ"
+                }
+            ], 
+            "CreationTime": "2016-05-22T09:24:49.489Z", 
+            "Capabilities": [
+                "CAPABILITY_IAM"
+            ], 
+            "StackName": "twain-integration-soln-www", 
+            "NotificationARNs": [], 
+            "StackStatus": "CREATE_COMPLETE", 
+            "DisableRollback": false
+        }
+    ]
+}
