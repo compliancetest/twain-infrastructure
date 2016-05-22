@@ -1,0 +1,36 @@
+
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+  "Resources" : 
+  {
+					
+                        "sqsXwebXtransactions":{
+                            "Type" : "AWS::SQS::Queue",
+                            "Properties" : {
+                                    "QueueName" : "twain-integration-transactions"
+                                
+                                
+                                
+                                
+                                
+                            }
+						}
+  },
+
+  "Outputs" : 
+  {
+						
+						"sqsXwebXtransactions" : {
+							"Value" : { "Fn::GetAtt" : ["sqsXwebXtransactions", "QueueName"] }
+						},
+						"sqsXwebXtransactionsXurl" : {
+							"Value" : { "Ref" : "sqsXwebXtransactions" }
+						},
+						"sqsXwebXtransactionsXarn" : {
+							"Value" : { "Fn::GetAtt" : ["sqsXwebXtransactions", "Arn"] }
+						}
+
+  }
+}
+
+
