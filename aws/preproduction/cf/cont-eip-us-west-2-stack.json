@@ -1,0 +1,26 @@
+{
+    "Stacks": [
+        {
+            "StackId": "arn:aws:cloudformation:us-west-2:355178332009:stack/twain-preproduction-cont-eip/8968bdb0-20d3-11e6-a535-50a68a0e322a", 
+            "Tags": [], 
+            "Outputs": [
+                {
+                    "OutputKey": "eipXmgmtXnatXaXip", 
+                    "OutputValue": "52.37.83.73"
+                }, 
+                {
+                    "OutputKey": "eipXmgmtXnatXaXid", 
+                    "OutputValue": "eipalloc-a0ccbcc4"
+                }
+            ], 
+            "CreationTime": "2016-05-23T10:45:59.699Z", 
+            "Capabilities": [
+                "CAPABILITY_IAM"
+            ], 
+            "StackName": "twain-preproduction-cont-eip", 
+            "NotificationARNs": [], 
+            "StackStatus": "CREATE_COMPLETE", 
+            "DisableRollback": false
+        }
+    ]
+}
