@@ -1,0 +1,86 @@
+
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+  "Resources" : 
+  {
+  
+		"s3Xlogs" : {
+			"Type" : "AWS::S3::Bucket",
+			"Properties" : {
+				"BucketName" : "logs.preproduction.twain.gosource.com.au",
+				"Tags" : [ 
+					{ "Key" : "gs:project", "Value" : "twain" },
+					{ "Key" : "gs:container", "Value" : "preprod" },
+					{ "Key" : "gs:environment", "Value" : "preprod" },
+					{ "Key" : "gs:category", "Value" : "stg" }
+				],
+				"LifecycleConfiguration" : {
+				    "Rules" : [
+				        {
+				            "Id" : "default",
+				            "ExpirationInDays" : 90,
+				            "Status" : "Enabled"
+				        }
+				    ]
+				}
+			}
+		},
+		"s3XlogsXpolicy" : {
+			"Type" : "AWS::S3::BucketPolicy",
+			"Properties" : {
+				"Bucket" : "logs.preproduction.twain.gosource.com.au",
+				"PolicyDocument" : {
+					"Statement": [
+						{
+							"Effect": "Allow",
+							"Principal": {
+								"AWS": "arn:aws:iam::797873946194:root"
+							},
+							"Action": "s3:PutObject",
+							"Resource": "arn:aws:s3:::logs.preproduction.twain.gosource.com.au/AWSLogs/*"
+						}
+					]
+				}				
+			}
+		},
+		"s3Xbackups" : {
+			"Type" : "AWS::S3::Bucket",
+			"Properties" : {
+				"BucketName" : "backups.preproduction.twain.gosource.com.au",
+				"Tags" : [ 
+					{ "Key" : "gs:project", "Value" : "twain" },
+					{ "Key" : "gs:container", "Value" : "preprod" },
+					{ "Key" : "gs:environment", "Value" : "preprod" },
+					{ "Key" : "gs:category", "Value" : "stg" }
+				],
+				"LifecycleConfiguration" : {
+				    "Rules" : [
+				        {
+				            "Id" : "default",
+				            "ExpirationInDays" : 365,
+				            "Status" : "Enabled"
+				        }
+				    ]
+				}
+			}
+		}
+  },
+
+  "Outputs" : 
+  {
+		"s3XcontainerXlogs" : 
+		{
+		  "Value" : { "Ref" : "s3Xlogs" }
+		},
+		"s3XcontainerXbackups" : 
+		{
+		  "Value" : { "Ref" : "s3Xbackups" }
+		}
+  }
+}
+
+
+
+
+
+
