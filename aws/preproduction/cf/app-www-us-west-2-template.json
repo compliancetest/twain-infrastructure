@@ -1,0 +1,335 @@
+
+
+
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+  "Resources" : 
+  {
+                                    
+    "ecsTaskXwebXwwwXwww" : {
+      "Type" : "AWS::ECS::TaskDefinition",
+      "Properties" : {
+        "ContainerDefinitions" : [
+                {
+                            "Name" : "web-www-www",
+                            "Image" : "docker.ct01.gosource.com.au/twain/e3052c4013434873121a2179ae3ad353dced16db",
+                            "Environment" : [
+                                {
+                                    "Name" : "DB_MYSQL_DNS",
+                                    "Value" : "twain-preproduction-database-mysql.cxwpegmisug9.us-west-2.rds.amazonaws.com"
+                                },
+                                {
+                                    "Name" : "DB_MYSQL_PORT",
+                                    "Value" : "3306"
+                                },
+                                {
+                                    "Name" : "DB_MYSQL_DATABASENAME",
+                                    "Value" : "twain"
+                                },
+                                {
+                                    "Name" : "DB_MYSQL_USERNAME",
+                                    "Value" : "root"
+                                },
+                                {
+                                    "Name" : "DB_MYSQL_PASSWORD",
+                                    "Value" : "HHFRrYKvSCB5ZVdDTUvS"
+                                },
+                                {
+                                    "Name" : "SMTP_HOST",
+                                    "Value" : "email-smtp.us-west-2.amazonaws.com"
+                                },
+                                {
+                                    "Name" : "SMTP_PORT",
+                                    "Value" : "587"
+                                },
+                                {
+                                    "Name" : "SMTP_USER",
+                                    "Value" : "AKIAICKKOCMDAFIZW4DQ"
+                                },
+                                {
+                                    "Name" : "SMTP_PASSWORD",
+                                    "Value" : "AoxGjltdWSSZGFh1463fDj7ZqWZgLjiAGzuosiTN2DTp"
+                                },
+                                {
+                                    "Name" : "SMTP_FROM",
+                                    "Value" : "noreply@twain.gosource.com.au"
+                                },
+                                {
+                                    "Name" : "BUCKET_TRANSACTIONS",
+                                    "Value" : "captures.preproduction.twain.gosource.com.au"
+                                },
+                                {
+                                    "Name" : "BUCKET_WEBSITE",
+                                    "Value" : "www.preproduction.twain.gosource.com.au"
+                                },
+                                {
+                                    "Name" : "BUCKET_REGION",
+                                    "Value" : "us-west-2"
+                                },
+                                {
+                                    "Name" : "SQS_QUEUE",
+                                    "Value" : "twain-preproduction-transactions"
+                                },
+                                {
+                                    "Name" : "SQS_PREFIX",
+                                    "Value" : "https://sqs.us-west-2.amazonaws.com/355178332009"
+                                },
+                                {
+                                    "Name" : "ENVIRONMENT",
+                                    "Value" : "preproduction"
+                                },
+                                {
+                                    "Name" : "CONFIGURATION_REFERENCE",
+                                    "Value" : "d14-preproduction"
+                                },
+                                {
+                                    "Name" : "BUILD_REFERENCE",
+                                    "Value" : "e3052c4013434873121a2179ae3ad353dced16db"
+                                },
+                                    {
+                                        "Name" : "APP_REFERENCE",
+                                        "Value" : "v0.1.0-rc1"
+                                    },
+                                {
+                                    "Name" : "DEPLOY_TIMESTAMP",
+                                    "Value" : "2016-05-23T13:39:51Z"
+                                }
+                            ],
+                                "PortMappings" : [
+                                      {
+                                          "ContainerPort" : 80,
+                                         "HostPort" : 80
+                                      }
+                                ],
+                            "MountPoints": [
+                                {
+                                    "SourceVolume": "uploads",
+                                    "ContainerPath": "/var/www/html/wp-content/uploads",
+                                    "ReadOnly": false
+                                }
+                            ],
+                            "Essential" : true,
+                            "Memory" : "2000",
+                            "Cpu" : "1024",
+                            "LogConfiguration" : {
+                                    "LogDriver" : "fluentd",
+                                    "Options" : { "tag" : "docker.twain.preprod.web.www.www"}
+                            }
+                },
+                {
+                            "Name" : "web-www-cleanup",
+                            "Image" : "docker.ct01.gosource.com.au/cleanup:1.0",
+                            "Environment" : [
+                                {
+                                    "Name" : "CLEAN_PERIOD",
+                                    "Value" : "900"
+                                },
+                                {
+                                    "Name" : "DELAY_TIME",
+                                    "Value" : "10800"
+                                }
+                            ],
+                            "MountPoints": [
+                                {
+                                    "SourceVolume": "dockerDaemon",
+                                    "ContainerPath": "/var/run/docker.sock",
+                                    "ReadOnly": false
+                                },
+                                {
+                                    "SourceVolume": "dockerFiles",
+                                    "ContainerPath": "/var/lib/docker",
+                                    "ReadOnly": false
+                                }
+                            ],
+                            "Essential" : false,
+                            "Memory" : "64",
+                            "Cpu" : "12",
+                            "LogConfiguration" : {
+                                    "LogDriver" : "fluentd",
+                                    "Options" : { "tag" : "docker.twain.preprod.web.www.cleanup"}
+                            }
+                }
+        ]
+            ,"Volumes" : [
+                            
+                            {
+                                "Host": {
+                                    "SourcePath": "/project/uploads"
+                                    },
+                                    "Name": "uploads"
+                            }
+                            ,
+                            {
+                                "Host": {
+                                    "SourcePath": "/var/run/docker.sock"
+                                    },
+                                    "Name": "dockerDaemon"
+                            },
+                            {
+                                "Host": {
+                                    "SourcePath": "/var/lib/docker"
+                                    },
+                                    "Name": "dockerFiles"
+                            }
+            ]
+      }
+    }
+                                    ,"ecsServiceXwebXwwwXwww" : {
+                                      "Type" : "AWS::ECS::Service",
+                                      "Properties" : {
+                                        "Cluster" : "twain-preproduction-soln-www-ecsXwebXwww-170CD824CQ9Z8",
+                                        "DeploymentConfiguration" : {
+                                                "MaximumPercent" : 100,
+                                                "MinimumHealthyPercent" : 0
+                                        },
+                                            "DesiredCount" : "1",
+                                            "LoadBalancers" : [
+                                                                
+                                                                {
+                                                                    "LoadBalancerName" : "twain-preprod-elb-www",
+                                                                    "ContainerName" : "web-www-www",
+                                                                    "ContainerPort" : 80
+                                                                }
+                                            ],
+                                            "Role" : "twain-preproduction-soln-www-roleXwebXwwwXservice-1KTH92DZ8X44I",
+                                        "TaskDefinition" : { "Ref" : "ecsTaskXwebXwwwXwww" }
+                                      }
+                                    }
+                                                ,"policyXwebXwwwXs3" : {
+                                                  "Type": "AWS::IAM::Policy",
+                                                  "Properties": {
+                                                    "PolicyDocument" : {
+                                                        "Version": "2012-10-17",
+                                                        "Statement": [
+                                                          {
+                                                            "Resource": [
+                                                                "arn:aws:s3:::captures.preproduction.twain.gosource.com.au",
+                                                                "arn:aws:s3:::www.preproduction.twain.gosource.com.au"
+                                                            ],
+                                                            "Action": [
+                                                                "s3:List*"
+                                                            ],
+                                                            "Effect": "Allow"
+                                                          },
+                                                          {
+                                                            "Resource": [
+                                                                "arn:aws:s3:::captures.preproduction.twain.gosource.com.au/*",
+                                                                "arn:aws:s3:::www.preproduction.twain.gosource.com.au/*"
+                                                            ],
+                                                            "Action": [
+                                                                "s3:*"
+                                                            ],
+                                                            "Effect": "Allow"
+                                                          }
+                                                        ]
+                                                    },
+                                                    "PolicyName": "web-www-s3",
+                                                    "Roles" : [ "twain-preproduction-soln-www-roleXwebXwww-1WOOKJ4ENQ1E7"]
+                                                  }
+                                                }
+                                                ,"bucketPolicyXwebXwwwXs3Xcaptures" : {
+                                                   "Type" : "AWS::S3::BucketPolicy",
+                                                   "Properties" : {
+                                                      "Bucket" : "captures.preproduction.twain.gosource.com.au",
+                                                      "PolicyDocument" : {
+                                                        "Version": "2008-10-17",
+                                                        "Statement": [
+                                                            {
+                                                                "Sid": "Stmt1410502242961",
+                                                                "Effect": "Allow",
+                                                                "Principal": {
+                                                                    "AWS": "*"
+                                                                },
+                                                                "Action": "s3:GetObject",
+                                                                "Resource": "arn:aws:s3:::captures.preproduction.twain.gosource.com.au/*"
+                                                            }
+                                                        ]
+                                                      }
+                                                   }
+                                                }
+                                                ,"bucketPolicyXwebXwwwXs3Xwww" : {
+                                                   "Type" : "AWS::S3::BucketPolicy",
+                                                   "Properties" : {
+                                                      "Bucket" : "www.preproduction.twain.gosource.com.au",
+                                                      "PolicyDocument" : {
+                                                        "Version": "2008-10-17",
+                                                        "Statement": [
+                                                            {
+                                                                "Sid": "Stmt1410502242961",
+                                                                "Effect": "Allow",
+                                                                "Principal": {
+                                                                    "AWS": "*"
+                                                                },
+                                                                "Action": "s3:GetObject",
+                                                                "Resource": "arn:aws:s3:::www.preproduction.twain.gosource.com.au/*"
+                                                            }
+                                                        ]
+                                                      }
+                                                   }
+                                                }
+                                                ,"policyXwebXwwwXsqs" : {
+                                                  "Type": "AWS::IAM::Policy",
+                                                  "Properties": {
+                                                    "PolicyDocument" : {
+                                                        "Version": "2012-10-17",
+                                                        "Statement": [
+                                                          {
+                                                            "Resource" : [
+                                                                "arn:aws:sqs:us-west-2:355178332009:twain-preproduction-transactions"
+                                                            ],
+                                                            "Action": [
+                                                                "sqs:*"
+                                                            ],
+                                                            "Effect": "Allow"
+                                                          }
+                                                        ]
+                                                    },
+                                                    "PolicyName": "web-www-sqs",
+                                                    "Roles" : [ "twain-preproduction-soln-www-roleXwebXwww-1WOOKJ4ENQ1E7"]
+                                                  }
+                                                }
+                                                ,"policyXwebXwwwXcloudsearch" : {
+                                                  "Type": "AWS::IAM::Policy",
+                                                  "Properties": {
+                                                    "PolicyDocument" : {
+                                                        "Version": "2012-10-17",
+                                                        "Statement": [
+                                                          {
+                                                            "Resource": [
+                                                                {
+                                                                    "Fn::Join" :[
+                                                                        "",
+                                                                        ["arn:aws:cloudsearch:", { "Ref" : "AWS::Region" }, ":", { "Ref" : "AWS::AccountId" }, ":domain/twain-preproduction"]
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "Fn::Join" :[
+                                                                        "",
+                                                                        ["arn:aws:cloudsearch:", { "Ref" : "AWS::Region" }, ":", { "Ref" : "AWS::AccountId" }, ":domain/twain-fulltext-preproduction"]
+                                                                    ]
+                                                                }
+                                                            ],
+                                                            "Action": [
+                                                                "cloudsearch:*"
+                                                            ],
+                                                            "Effect": "Allow"
+                                                          }
+                                                        ]
+                                                    },
+                                                    "PolicyName": "web-www-cloudsearch",
+                                                    "Roles" : [ "twain-preproduction-soln-www-roleXwebXwww-1WOOKJ4ENQ1E7"]
+                                                  }
+                                                }
+  },
+  "Outputs" : 
+  {
+                                    
+                                    "ecsServiceXwebXwwwXwww" : {
+                                        "Value" : { "Ref" : "ecsServiceXwebXwwwXwww" }
+                                    },
+                                    "ecsTaskXwebXwwwXwww" : {
+                                        "Value" : { "Ref" : "ecsTaskXwebXwwwXwww" }
+                                    }
+  }
+}
+
