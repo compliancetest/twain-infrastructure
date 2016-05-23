@@ -2,6 +2,7 @@
     "Stacks": [
         {
             "StackId": "arn:aws:cloudformation:us-west-2:355178332009:stack/twain-preproduction-cont-vpc/9f368f00-20d3-11e6-b488-50ba1b9b0aa6", 
+            "LastUpdatedTime": "2016-05-23T11:48:34.631Z", 
             "Tags": [], 
             "Outputs": [
                 {
@@ -21,20 +22,40 @@
                     "OutputValue": "subnet-b9ce10cf"
                 }, 
                 {
+                    "OutputKey": "subnetXelbXb", 
+                    "OutputValue": "subnet-314bcf55"
+                }, 
+                {
                     "OutputKey": "subnetXwebXa", 
                     "OutputValue": "subnet-b8ce10ce"
+                }, 
+                {
+                    "OutputKey": "subnetXwebXb", 
+                    "OutputValue": "subnet-364bcf52"
                 }, 
                 {
                     "OutputKey": "subnetXanaXa", 
                     "OutputValue": "subnet-bbce10cd"
                 }, 
                 {
+                    "OutputKey": "subnetXanaXb", 
+                    "OutputValue": "subnet-374bcf53"
+                }, 
+                {
                     "OutputKey": "subnetXdbXa", 
                     "OutputValue": "subnet-a7ce10d1"
                 }, 
                 {
+                    "OutputKey": "subnetXdbXb", 
+                    "OutputValue": "subnet-304bcf54"
+                }, 
+                {
                     "OutputKey": "subnetXmgmtXa", 
                     "OutputValue": "subnet-a6ce10d0"
+                }, 
+                {
+                    "OutputKey": "subnetXmgmtXb", 
+                    "OutputValue": "subnet-354bcf51"
                 }
             ], 
             "CreationTime": "2016-05-23T10:46:36.283Z", 
@@ -43,7 +64,7 @@
             ], 
             "StackName": "twain-preproduction-cont-vpc", 
             "NotificationARNs": [], 
-            "StackStatus": "CREATE_COMPLETE", 
+            "StackStatus": "UPDATE_COMPLETE", 
             "DisableRollback": false
         }
     ]

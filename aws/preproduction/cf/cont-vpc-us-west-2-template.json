@@ -164,6 +164,46 @@
                         "NetworkAclId" : { "Ref" : "networkACLXopen" }
                       }
                     }
+                    ,"subnetXelbXb" : 
+                    {
+                      "Type" : "AWS::EC2::Subnet",
+                      "Properties" : 
+                      {
+                        "VpcId" : { "Ref" : "vpc" },
+                        "AvailabilityZone" : "us-west-2b",
+                        "CidrBlock" : "10.0.132.0/22",
+                        "Tags" : [
+                          { "Key" : "gs:account", "Value" : "ct01" },
+                          { "Key" : "gs:project", "Value" : "twain" },
+                          { "Key" : "gs:container", "Value" : "preprod" },
+                          { "Key" : "gs:environment", "Value" : "preprod" },
+                          { "Key" : "gs:category", "Value" : "stg" },
+                          { "Key" : "gs:tier", "Value" : "elb" },
+                          { "Key" : "gs:zone", "Value" : "b" },
+                          { "Key" : "Name", "Value" : "twain-preproduction-elb-b" } 
+                        ]
+                      }
+                    },
+        
+                    "routeTableXassociationXelbXb" : 
+                    {
+                      "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+                      "Properties" : 
+                      {
+                        "SubnetId" : { "Ref" : "subnetXelbXb" },
+                        "RouteTableId" : { "Ref" : "routeTableXexternal" }
+                      }
+                    },
+        
+                    "networkACLXassociationXelbXb" : 
+                    {
+                      "Type" : "AWS::EC2::SubnetNetworkAclAssociation",
+                      "Properties" : 
+                      {
+                        "SubnetId" : { "Ref" : "subnetXelbXb" },
+                        "NetworkAclId" : { "Ref" : "networkACLXopen" }
+                      }
+                    }
                     ,"subnetXwebXa" : 
                     {
                       "Type" : "AWS::EC2::Subnet",
@@ -202,6 +242,47 @@
                       "Properties" : 
                       {
                         "SubnetId" : { "Ref" : "subnetXwebXa" },
+                        "NetworkAclId" : { "Ref" : "networkACLXopen" }
+                      }
+                    }
+                    ,"subnetXwebXb" : 
+                    {
+                      "Type" : "AWS::EC2::Subnet",
+                      "Properties" : 
+                      {
+                        "VpcId" : { "Ref" : "vpc" },
+                        "AvailabilityZone" : "us-west-2b",
+                        "CidrBlock" : "10.0.4.0/22",
+                        "Tags" : [
+                          { "Key" : "gs:account", "Value" : "ct01" },
+                          { "Key" : "gs:project", "Value" : "twain" },
+                          { "Key" : "gs:container", "Value" : "preprod" },
+                          { "Key" : "gs:environment", "Value" : "preprod" },
+                          { "Key" : "gs:category", "Value" : "stg" },
+                          { "Key" : "gs:tier", "Value" : "web" },
+                          { "Key" : "gs:zone", "Value" : "b" },
+                            { "Key" : "network", "Value" : "private" },
+                          { "Key" : "Name", "Value" : "twain-preproduction-web-b" } 
+                        ]
+                      }
+                    },
+        
+                    "routeTableXassociationXwebXb" : 
+                    {
+                      "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+                      "Properties" : 
+                      {
+                        "SubnetId" : { "Ref" : "subnetXwebXb" },
+                        "RouteTableId" : { "Ref" : "routeTableXinternal" }
+                      }
+                    },
+        
+                    "networkACLXassociationXwebXb" : 
+                    {
+                      "Type" : "AWS::EC2::SubnetNetworkAclAssociation",
+                      "Properties" : 
+                      {
+                        "SubnetId" : { "Ref" : "subnetXwebXb" },
                         "NetworkAclId" : { "Ref" : "networkACLXopen" }
                       }
                     }
@@ -246,6 +327,47 @@
                         "NetworkAclId" : { "Ref" : "networkACLXopen" }
                       }
                     }
+                    ,"subnetXanaXb" : 
+                    {
+                      "Type" : "AWS::EC2::Subnet",
+                      "Properties" : 
+                      {
+                        "VpcId" : { "Ref" : "vpc" },
+                        "AvailabilityZone" : "us-west-2b",
+                        "CidrBlock" : "10.0.84.0/22",
+                        "Tags" : [
+                          { "Key" : "gs:account", "Value" : "ct01" },
+                          { "Key" : "gs:project", "Value" : "twain" },
+                          { "Key" : "gs:container", "Value" : "preprod" },
+                          { "Key" : "gs:environment", "Value" : "preprod" },
+                          { "Key" : "gs:category", "Value" : "stg" },
+                          { "Key" : "gs:tier", "Value" : "ana" },
+                          { "Key" : "gs:zone", "Value" : "b" },
+                            { "Key" : "network", "Value" : "private" },
+                          { "Key" : "Name", "Value" : "twain-preproduction-analytics-b" } 
+                        ]
+                      }
+                    },
+        
+                    "routeTableXassociationXanaXb" : 
+                    {
+                      "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+                      "Properties" : 
+                      {
+                        "SubnetId" : { "Ref" : "subnetXanaXb" },
+                        "RouteTableId" : { "Ref" : "routeTableXinternal" }
+                      }
+                    },
+        
+                    "networkACLXassociationXanaXb" : 
+                    {
+                      "Type" : "AWS::EC2::SubnetNetworkAclAssociation",
+                      "Properties" : 
+                      {
+                        "SubnetId" : { "Ref" : "subnetXanaXb" },
+                        "NetworkAclId" : { "Ref" : "networkACLXopen" }
+                      }
+                    }
                     ,"subnetXdbXa" : 
                     {
                       "Type" : "AWS::EC2::Subnet",
@@ -287,6 +409,47 @@
                         "NetworkAclId" : { "Ref" : "networkACLXopen" }
                       }
                     }
+                    ,"subnetXdbXb" : 
+                    {
+                      "Type" : "AWS::EC2::Subnet",
+                      "Properties" : 
+                      {
+                        "VpcId" : { "Ref" : "vpc" },
+                        "AvailabilityZone" : "us-west-2b",
+                        "CidrBlock" : "10.0.52.0/22",
+                        "Tags" : [
+                          { "Key" : "gs:account", "Value" : "ct01" },
+                          { "Key" : "gs:project", "Value" : "twain" },
+                          { "Key" : "gs:container", "Value" : "preprod" },
+                          { "Key" : "gs:environment", "Value" : "preprod" },
+                          { "Key" : "gs:category", "Value" : "stg" },
+                          { "Key" : "gs:tier", "Value" : "db" },
+                          { "Key" : "gs:zone", "Value" : "b" },
+                            { "Key" : "network", "Value" : "private" },
+                          { "Key" : "Name", "Value" : "twain-preproduction-database-b" } 
+                        ]
+                      }
+                    },
+        
+                    "routeTableXassociationXdbXb" : 
+                    {
+                      "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+                      "Properties" : 
+                      {
+                        "SubnetId" : { "Ref" : "subnetXdbXb" },
+                        "RouteTableId" : { "Ref" : "routeTableXinternal" }
+                      }
+                    },
+        
+                    "networkACLXassociationXdbXb" : 
+                    {
+                      "Type" : "AWS::EC2::SubnetNetworkAclAssociation",
+                      "Properties" : 
+                      {
+                        "SubnetId" : { "Ref" : "subnetXdbXb" },
+                        "NetworkAclId" : { "Ref" : "networkACLXopen" }
+                      }
+                    }
                     ,"subnetXmgmtXa" : 
                     {
                       "Type" : "AWS::EC2::Subnet",
@@ -324,6 +487,46 @@
                       "Properties" : 
                       {
                         "SubnetId" : { "Ref" : "subnetXmgmtXa" },
+                        "NetworkAclId" : { "Ref" : "networkACLXopen" }
+                      }
+                    }
+                    ,"subnetXmgmtXb" : 
+                    {
+                      "Type" : "AWS::EC2::Subnet",
+                      "Properties" : 
+                      {
+                        "VpcId" : { "Ref" : "vpc" },
+                        "AvailabilityZone" : "us-west-2b",
+                        "CidrBlock" : "10.0.244.0/22",
+                        "Tags" : [
+                          { "Key" : "gs:account", "Value" : "ct01" },
+                          { "Key" : "gs:project", "Value" : "twain" },
+                          { "Key" : "gs:container", "Value" : "preprod" },
+                          { "Key" : "gs:environment", "Value" : "preprod" },
+                          { "Key" : "gs:category", "Value" : "stg" },
+                          { "Key" : "gs:tier", "Value" : "mgmt" },
+                          { "Key" : "gs:zone", "Value" : "b" },
+                          { "Key" : "Name", "Value" : "twain-preproduction-management-b" } 
+                        ]
+                      }
+                    },
+        
+                    "routeTableXassociationXmgmtXb" : 
+                    {
+                      "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+                      "Properties" : 
+                      {
+                        "SubnetId" : { "Ref" : "subnetXmgmtXb" },
+                        "RouteTableId" : { "Ref" : "routeTableXexternal" }
+                      }
+                    },
+        
+                    "networkACLXassociationXmgmtXb" : 
+                    {
+                      "Type" : "AWS::EC2::SubnetNetworkAclAssociation",
+                      "Properties" : 
+                      {
+                        "SubnetId" : { "Ref" : "subnetXmgmtXb" },
                         "NetworkAclId" : { "Ref" : "networkACLXopen" }
                       }
                     }
@@ -584,21 +787,41 @@
                     {
                       "Value" : { "Ref" : "subnetXelbXa" }
                     }
+                    ,"subnetXelbXb" : 
+                    {
+                      "Value" : { "Ref" : "subnetXelbXb" }
+                    }
                     ,"subnetXwebXa" : 
                     {
                       "Value" : { "Ref" : "subnetXwebXa" }
+                    }
+                    ,"subnetXwebXb" : 
+                    {
+                      "Value" : { "Ref" : "subnetXwebXb" }
                     }
                     ,"subnetXanaXa" : 
                     {
                       "Value" : { "Ref" : "subnetXanaXa" }
                     }
+                    ,"subnetXanaXb" : 
+                    {
+                      "Value" : { "Ref" : "subnetXanaXb" }
+                    }
                     ,"subnetXdbXa" : 
                     {
                       "Value" : { "Ref" : "subnetXdbXa" }
                     }
+                    ,"subnetXdbXb" : 
+                    {
+                      "Value" : { "Ref" : "subnetXdbXb" }
+                    }
                     ,"subnetXmgmtXa" : 
                     {
                       "Value" : { "Ref" : "subnetXmgmtXa" }
+                    }
+                    ,"subnetXmgmtXb" : 
+                    {
+                      "Value" : { "Ref" : "subnetXmgmtXb" }
                     }
   }
 }
