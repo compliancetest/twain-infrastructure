@@ -1,0 +1,30 @@
+{
+    "Stacks": [
+        {
+            "StackId": "arn:aws:cloudformation:us-west-2:355178332009:stack/twain-preproduction-soln-www-elb/046b08c0-20e2-11e6-bc3b-50d5ca11b8d2", 
+            "Tags": [], 
+            "Outputs": [
+                {
+                    "OutputKey": "securityGroupXelbXwww", 
+                    "OutputValue": "sg-b5c72ed3"
+                }, 
+                {
+                    "OutputKey": "elbXelbXwww", 
+                    "OutputValue": "twain-preprod-elb-www"
+                }, 
+                {
+                    "OutputKey": "elbXelbXwwwXdns", 
+                    "OutputValue": "twain-preprod-elb-www-1175061220.us-west-2.elb.amazonaws.com"
+                }
+            ], 
+            "CreationTime": "2016-05-23T12:29:39.028Z", 
+            "Capabilities": [
+                "CAPABILITY_IAM"
+            ], 
+            "StackName": "twain-preproduction-soln-www-elb", 
+            "NotificationARNs": [], 
+            "StackStatus": "CREATE_COMPLETE", 
+            "DisableRollback": false
+        }
+    ]
+}
