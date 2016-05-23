@@ -1,0 +1,50 @@
+{
+    "Stacks": [
+        {
+            "StackId": "arn:aws:cloudformation:us-west-2:355178332009:stack/twain-preproduction-cont-vpc/9f368f00-20d3-11e6-b488-50ba1b9b0aa6", 
+            "Tags": [], 
+            "Outputs": [
+                {
+                    "OutputKey": "vpcXcontainerXvpc", 
+                    "OutputValue": "vpc-79b30b1d"
+                }, 
+                {
+                    "OutputKey": "igwXcontainerXigw", 
+                    "OutputValue": "igw-ddd2dcb8"
+                }, 
+                {
+                    "OutputKey": "securityGroupXmgmtXnat", 
+                    "OutputValue": "sg-dde40dbb"
+                }, 
+                {
+                    "OutputKey": "subnetXelbXa", 
+                    "OutputValue": "subnet-b9ce10cf"
+                }, 
+                {
+                    "OutputKey": "subnetXwebXa", 
+                    "OutputValue": "subnet-b8ce10ce"
+                }, 
+                {
+                    "OutputKey": "subnetXanaXa", 
+                    "OutputValue": "subnet-bbce10cd"
+                }, 
+                {
+                    "OutputKey": "subnetXdbXa", 
+                    "OutputValue": "subnet-a7ce10d1"
+                }, 
+                {
+                    "OutputKey": "subnetXmgmtXa", 
+                    "OutputValue": "subnet-a6ce10d0"
+                }
+            ], 
+            "CreationTime": "2016-05-23T10:46:36.283Z", 
+            "Capabilities": [
+                "CAPABILITY_IAM"
+            ], 
+            "StackName": "twain-preproduction-cont-vpc", 
+            "NotificationARNs": [], 
+            "StackStatus": "CREATE_COMPLETE", 
+            "DisableRollback": false
+        }
+    ]
+}
