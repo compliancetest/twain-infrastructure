@@ -1,0 +1,34 @@
+{
+    "Stacks": [
+        {
+            "StackId": "arn:aws:cloudformation:us-west-2:355178332009:stack/twain-preproduction-soln-www-s3/eed07c70-20e1-11e6-91e5-503f2a2cee56", 
+            "Tags": [], 
+            "Outputs": [
+                {
+                    "OutputKey": "s3XwebXwww", 
+                    "OutputValue": "www.preproduction.twain.gosource.com.au"
+                }, 
+                {
+                    "OutputKey": "s3XwebXwwwXurl", 
+                    "OutputValue": "http://www.preproduction.twain.gosource.com.au.s3-website-us-west-2.amazonaws.com"
+                }, 
+                {
+                    "OutputKey": "s3XwebXcaptures", 
+                    "OutputValue": "captures.preproduction.twain.gosource.com.au"
+                }, 
+                {
+                    "OutputKey": "s3XwebXcapturesXurl", 
+                    "OutputValue": "http://captures.preproduction.twain.gosource.com.au.s3-website-us-west-2.amazonaws.com"
+                }
+            ], 
+            "CreationTime": "2016-05-23T12:29:02.783Z", 
+            "Capabilities": [
+                "CAPABILITY_IAM"
+            ], 
+            "StackName": "twain-preproduction-soln-www-s3", 
+            "NotificationARNs": [], 
+            "StackStatus": "CREATE_COMPLETE", 
+            "DisableRollback": false
+        }
+    ]
+}
