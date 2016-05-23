@@ -1,0 +1,30 @@
+{
+    "Stacks": [
+        {
+            "StackId": "arn:aws:cloudformation:us-west-2:355178332009:stack/twain-preproduction-soln-www-sqs/d94a3b70-20e1-11e6-9652-50d5ca789eba", 
+            "Tags": [], 
+            "Outputs": [
+                {
+                    "OutputKey": "sqsXwebXtransactions", 
+                    "OutputValue": "twain-preproduction-transactions"
+                }, 
+                {
+                    "OutputKey": "sqsXwebXtransactionsXurl", 
+                    "OutputValue": "https://sqs.us-west-2.amazonaws.com/355178332009/twain-preproduction-transactions"
+                }, 
+                {
+                    "OutputKey": "sqsXwebXtransactionsXarn", 
+                    "OutputValue": "arn:aws:sqs:us-west-2:355178332009:twain-preproduction-transactions"
+                }
+            ], 
+            "CreationTime": "2016-05-23T12:28:26.671Z", 
+            "Capabilities": [
+                "CAPABILITY_IAM"
+            ], 
+            "StackName": "twain-preproduction-soln-www-sqs", 
+            "NotificationARNs": [], 
+            "StackStatus": "CREATE_COMPLETE", 
+            "DisableRollback": false
+        }
+    ]
+}
