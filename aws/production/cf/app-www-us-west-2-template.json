@@ -12,7 +12,7 @@
         "ContainerDefinitions" : [
                 {
                             "Name" : "web-www-www",
-                            "Image" : "docker.ct01.gosource.com.au/website/36cc2e8639bdb7fa2baa19bd715262a42ed03e1b v0.0.1-rc1",
+                            "Image" : "docker.ct01.gosource.com.au/twain/30c3a736b7b8af096b5974960dae2c080ceea4c9",
                             "Environment" : [
                                 {
                                     "Name" : "DB_MYSQL_DNS",
@@ -80,19 +80,19 @@
                                 },
                                 {
                                     "Name" : "CONFIGURATION_REFERENCE",
-                                    "Value" : "d11-production"
+                                    "Value" : "d16-production"
                                 },
                                 {
                                     "Name" : "BUILD_REFERENCE",
-                                    "Value" : "36cc2e8639bdb7fa2baa19bd715262a42ed03e1b"
+                                    "Value" : "30c3a736b7b8af096b5974960dae2c080ceea4c9"
                                 },
                                     {
                                         "Name" : "APP_REFERENCE",
-                                        "Value" : "v0.0.1-rc1"
+                                        "Value" : "v1.0.0-rc1 "
                                     },
                                 {
                                     "Name" : "DEPLOY_TIMESTAMP",
-                                    "Value" : "2016-05-19T22:43:44Z"
+                                    "Value" : "2016-05-24T07:56:57Z"
                                 }
                             ],
                                 "PortMappings" : [
@@ -226,6 +226,46 @@
                                                     "PolicyName": "web-www-s3",
                                                     "Roles" : [ "twain-production-soln-www-roleXwebXwww-5F0DGPW04F7V"]
                                                   }
+                                                }
+                                                ,"bucketPolicyXwebXwwwXs3Xcaptures" : {
+                                                   "Type" : "AWS::S3::BucketPolicy",
+                                                   "Properties" : {
+                                                      "Bucket" : "captures.production.twain.gosource.com.au",
+                                                      "PolicyDocument" : {
+                                                        "Version": "2008-10-17",
+                                                        "Statement": [
+                                                            {
+                                                                "Sid": "Stmt1410502242961",
+                                                                "Effect": "Allow",
+                                                                "Principal": {
+                                                                    "AWS": "*"
+                                                                },
+                                                                "Action": "s3:GetObject",
+                                                                "Resource": "arn:aws:s3:::captures.production.twain.gosource.com.au/*"
+                                                            }
+                                                        ]
+                                                      }
+                                                   }
+                                                }
+                                                ,"bucketPolicyXwebXwwwXs3Xwww" : {
+                                                   "Type" : "AWS::S3::BucketPolicy",
+                                                   "Properties" : {
+                                                      "Bucket" : "www.production.twain.gosource.com.au",
+                                                      "PolicyDocument" : {
+                                                        "Version": "2008-10-17",
+                                                        "Statement": [
+                                                            {
+                                                                "Sid": "Stmt1410502242961",
+                                                                "Effect": "Allow",
+                                                                "Principal": {
+                                                                    "AWS": "*"
+                                                                },
+                                                                "Action": "s3:GetObject",
+                                                                "Resource": "arn:aws:s3:::www.production.twain.gosource.com.au/*"
+                                                            }
+                                                        ]
+                                                      }
+                                                   }
                                                 }
                                                 ,"policyXwebXwwwXsqs" : {
                                                   "Type": "AWS::IAM::Policy",
