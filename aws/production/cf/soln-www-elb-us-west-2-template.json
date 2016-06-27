@@ -12,7 +12,7 @@
 							"Tags" : [
 								{ "Key" : "gs:account", "Value" : "ct02" },
 								{ "Key" : "gs:project", "Value" : "twain" },
-								{ "Key" : "gs:container", "Value" : "prod" },
+								{ "Key" : "gs:segment", "Value" : "prod" },
 								{ "Key" : "gs:environment", "Value" : "prod" },
 								{ "Key" : "gs:category", "Value" : "prod" },
 								{ "Key" : "gs:tier", "Value" : "elb" },
@@ -82,7 +82,7 @@
 							"Tags" : [
 								{ "Key" : "gs:account", "Value" : "ct02" },
 								{ "Key" : "gs:project", "Value" : "twain" },
-								{ "Key" : "gs:container", "Value" : "prod" },
+								{ "Key" : "gs:segment", "Value" : "prod" },
 								{ "Key" : "gs:environment", "Value" : "prod" },
 								{ "Key" : "gs:category", "Value" : "prod" },
 								{ "Key" : "gs:tier", "Value" : "elb" },
