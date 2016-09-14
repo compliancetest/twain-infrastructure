@@ -12,7 +12,7 @@
         "ContainerDefinitions" : [
                 {
                             "Name" : "web-www-www",
-                            "Image" : "docker.ct01.gosource.com.au/twain/3020a110f3bf1805195d6bc40edeb1b87ef9c9ea",
+                            "Image" : "docker.ct01.gosource.com.au/twain/afecbbfdf1f176f6abb42ec76b3d801436fdf77e",
                             "Environment" : [
                                 {
                                     "Name" : "DB_MYSQL_DNS",
@@ -80,19 +80,19 @@
                                 },
                                 {
                                     "Name" : "CONFIGURATION_REFERENCE",
-                                    "Value" : "d59-preproduction"
+                                    "Value" : "d61-preproduction"
                                 },
                                 {
                                     "Name" : "BUILD_REFERENCE",
-                                    "Value" : "3020a110f3bf1805195d6bc40edeb1b87ef9c9ea"
+                                    "Value" : "afecbbfdf1f176f6abb42ec76b3d801436fdf77e"
                                 },
                                     {
                                         "Name" : "APP_REFERENCE",
-                                        "Value" : "v1.19.0-rc1"
+                                        "Value" : "v1.20.0-rc1"
                                     },
                                 {
                                     "Name" : "DEPLOY_TIMESTAMP",
-                                    "Value" : "2016-09-13T14:35:27Z"
+                                    "Value" : "2016-09-14T15:07:31Z"
                                 }
                             ],
                                 "PortMappings" : [
