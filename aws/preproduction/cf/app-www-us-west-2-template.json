@@ -80,7 +80,7 @@
                                 },
                                 {
                                     "Name" : "CONFIGURATION_REFERENCE",
-                                    "Value" : "d86-preproduction"
+                                    "Value" : "d87-preproduction"
                                 },
                                 {
                                     "Name" : "BUILD_REFERENCE",
@@ -92,7 +92,7 @@
                                     },
                                 {
                                     "Name" : "DEPLOY_TIMESTAMP",
-                                    "Value" : "2016-12-02T08:08:42Z"
+                                    "Value" : "2016-12-02T11:56:36Z"
                                 }
                             ],
                                 "PortMappings" : [
@@ -112,8 +112,7 @@
                             "Memory" : "2000",
                             "Cpu" : "1024",
                             "LogConfiguration" : {
-                                    "LogDriver" : "fluentd",
-                                    "Options" : { "tag" : "docker.twain.preprod.web.www.www"}
+                                    "LogDriver" : "json-file"
                             }
                 },
                 {
@@ -145,8 +144,7 @@
                             "Memory" : "64",
                             "Cpu" : "12",
                             "LogConfiguration" : {
-                                    "LogDriver" : "fluentd",
-                                    "Options" : { "tag" : "docker.twain.preprod.web.www.cleanup"}
+                                    "LogDriver" : "json-file"
                             }
                 }
         ]
